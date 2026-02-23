@@ -1,0 +1,29 @@
+#define LOCALE_SERVICE_SINGAPORE			// ½Ì°¡Æú
+#define ENABLE_COSTUME_SYSTEM
+#define ENABLE_ENERGY_SYSTEM
+#define ENABLE_DRAGON_SOUL_SYSTEM
+#define ENABLE_NEW_EQUIPMENT_SYSTEM
+//#define ENABLE_DISCORD_RPC
+
+#define MALI_Metin2_Official_Collision_Update
+#define D_OnMouseWheel
+#define ALPHA_SENSITIVE
+
+#define ENABLE_COSTUME_WEAPON
+#define BLOCK_D_YMIR
+
+#define FIX_01
+//#define BOSS_SYSTEM_FALLBACK
+
+#define ENABLE_KEYCHANGE_SYSTEM
+#define EMOJI_TEXTLINE
+#define ADVANCED_BLOCK_DODGE
+//#define ADVANCED_MOB_ENCHANT
+//#define ADVANCED_MOB_RESIST
+
+#define ENABLE_CPP_PSM																// fast loading
+//#define ENABLE_COSTUME_MOUNT
+//#define ENABLE_COSTUME_PET
+
+//#define ENABLE_RARITY_SYSTEM
+
