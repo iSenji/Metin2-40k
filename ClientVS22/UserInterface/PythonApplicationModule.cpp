@@ -1356,7 +1356,7 @@ void initapp()
 	PyModule_AddIntConstant(poModule, "VK_DELETE",	     VK_DELETE);
 
 	PyModule_AddIntConstant(poModule, "DIK_ESCAPE",      DIK_ESCAPE);
-	PyModule_AddIntConstant(poModule, "DIK_ESC",         DIK_ESCAPE);	// ÆíÀÇ¸¦ À§ÇØ
+	PyModule_AddIntConstant(poModule, "DIK_ESC",         DIK_ESCAPE);	// Ã†Ã­Ã€Ã‡Â¸Â¦ Ã€Â§Ã‡Ã˜
 	PyModule_AddIntConstant(poModule, "DIK_1",           DIK_1);
 	PyModule_AddIntConstant(poModule, "DIK_2",           DIK_2);
 	PyModule_AddIntConstant(poModule, "DIK_3",           DIK_3);
@@ -1498,6 +1498,11 @@ void initapp()
 	PyModule_AddIntConstant(poModule, "ENABLE_CPP_PSM", 1);
 #else
 	PyModule_AddIntConstant(poModule, "ENABLE_CPP_PSM", 0);
+#endif
+#ifdef ENABLE_PARTY_UPDATE
+	PyModule_AddIntConstant(poModule, "ENABLE_PARTY_UPDATE", 1);
+#else
+	PyModule_AddIntConstant(poModule, "ENABLE_PARTY_UPDATE", 0);
 #endif
 #ifdef ENABLE_COSTUME_MOUNT
 	PyModule_AddIntConstant(poModule, "ENABLE_COSTUME_MOUNT", 1);
