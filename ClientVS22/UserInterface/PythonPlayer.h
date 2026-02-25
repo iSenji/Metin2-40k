@@ -131,7 +131,7 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 		typedef struct SPartyMemberInfo
 		{
 #ifdef ENABLE_PARTY_UPDATE
-			SPartyMemberInfo(DWORD _dwPID, const char* c_szName, DWORD dwRace, DWORD dwLevel) : dwPID(_dwPID), strName(c_szName), dwVID(0), byState(0), byHPPercentage(0), dwRace(dwRace), dwLevel(dwLevel) { memset(&sAffects, 0, sizeof(sAffects)); }
+			SPartyMemberInfo(DWORD _dwPID, const char* c_szName, DWORD dwRace, DWORD dwLevel) : dwPID(_dwPID), strName(c_szName), dwVID(0), byState(0), byHPPercentage(0), dwRace(dwRace), dwLevel(dwLevel), byEXPPercentage(0) { memset(&sAffects, 0, sizeof(sAffects)); }
 #else
 			SPartyMemberInfo(DWORD _dwPID, const char * c_szName) : dwPID(_dwPID), strName(c_szName), dwVID(0), byState(0), byHPPercentage(0) { memset(&sAffects, 0, sizeof(sAffects)); }
 #endif
