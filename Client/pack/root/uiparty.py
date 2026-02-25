@@ -7,6 +7,7 @@ import localeInfo
 import uiScriptLocale
 import constInfo
 import mouseModule
+import playerSettingModule
 
 class PartyMemberInfoBoard(ui.ScriptWindow):
 	if localeInfo.IsJAPAN():
@@ -65,6 +66,17 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 							player.PARTY_STATE_BUFFER : localeInfo.PARTY_SET_BUFFER,
 							player.PARTY_STATE_SKILL_MASTER : localeInfo.PARTY_SET_SKILL_MASTER, }
 
+	FACE_IMAGE_DICT = {
+	playerSettingModule.RACE_WARRIOR_M	: "icon/face/warrior_m.tga",
+	playerSettingModule.RACE_WARRIOR_W	: "icon/face/warrior_w.tga",
+	playerSettingModule.RACE_ASSASSIN_M	: "icon/face/assassin_m.tga",
+	playerSettingModule.RACE_ASSASSIN_W	: "icon/face/assassin_w.tga",
+	playerSettingModule.RACE_SURA_M		: "icon/face/sura_m.tga",
+	playerSettingModule.RACE_SURA_W		: "icon/face/sura_w.tga",
+	playerSettingModule.RACE_SHAMAN_M	: "icon/face/shaman_m.tga",
+	playerSettingModule.RACE_SHAMAN_W	: "icon/face/shaman_w.tga",
+}
+
 	def __init__(self):
 		ui.ScriptWindow.__init__(self)
 
@@ -99,6 +111,9 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 
 		try:
 			self.nameTextLine = self.GetChild("NamePrint")
+			if app.ENABLE_PARTY_UPDATE:
+				self.levelTextLine = self.GetChild("LevelPrint")
+				self.faceImage = self.GetChild("Face_Image")
 			self.gauge = self.GetChild("Gauge")
 			self.stateButton = self.GetChild("StateButton")
 			self.partyAffectImageList.append(self.GetChild("ExperienceImage"))
@@ -121,6 +136,9 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 	def Destroy(self):
 		self.ClearDictionary()
 		self.nameTextLine = None
+		if app.ENABLE_PARTY_UPDATE:
+			self.levelTextLine = None
+			self.faceImage = None
 		self.gauge = None
 		self.stateButton = None
 		self.partyAffectImageList = []
@@ -259,6 +277,21 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 	def SetCharacterPID(self, pid):
 		self.pid = pid
 
+	if app.ENABLE_PARTY_UPDATE:
+		def SetCharacterRace(self, race, pid):
+			if pid == self.pid:
+					faceImageName = FACE_IMAGE_DICT[race]
+					self.faceImage.LoadImage(faceImageName)
+
+			def SetCharacterLevel(self, level, pid):
+			if pid == self.pid:
+				if len(self.GetCharacterName()) > 0:
+					self.levelTextLine.SetText("Lv.{} {}".format(level, self.GetCharacterName()))
+					self.nameTextLine.Hide()
+				else:
+					self.levelTextLine.SetText("Lv.{}".format(level))
+					self.nameTextLine.Show()
+	
 	def SetCharacterVID(self, vid):
 		self.vid = vid
 
@@ -302,11 +335,17 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 
 	def Link(self):
 		self.nameTextLine.SetPackedFontColor(self.LINK_COLOR)
+		if app.ENABLE_PARTY_UPDATE:
+			self.levelTextLine.SetPackedFontColor(self.LINK_COLOR)
+			self.faceImage.Show()
 		self.gauge.Show()
 
 	def Unlink(self):
 		self.vid = None
 		self.nameTextLine.SetPackedFontColor(self.UNLINK_COLOR)
+		if app.ENABLE_PARTY_UPDATE:
+			self.levelTextLine.SetPackedFontColor(self.UNLINK_COLOR)
+			self.faceImage.Hide()
 		self.gauge.Hide()
 		self.__HideAllAffects()
 
@@ -599,27 +638,51 @@ class PartyWindow(ui.Window):
 		partyMenu.Hide()
 		self.partyMenu = partyMenu
 
-	def AddPartyMember(self, pid, name):
+	if app.ENABLE_PARTY_UPDATE:
+		def AddPartyMember(self, pid, name, race, level):
+			board = self.__FindPartyMemberInfoBoardByPID(pid)
 
-		board = self.__FindPartyMemberInfoBoardByPID(pid)
+			if None == board:
 
-		if None == board:
+				board = PartyMemberInfoBoard()
+				board.SetParent(self)
+				board.SetCharacterPID(pid)
+				board.SetCharacterLevel(level, pid)
+				board.SetCharacterRace(race, pid)
 
-			board = PartyMemberInfoBoard()
-			board.SetParent(self)
-			board.SetCharacterPID(pid)
+				self.partyMemberInfoBoardList.append(board)
+				self.__ArrangePartyMemberInfoBoard()
+				self.UpdateRect()
 
-			self.partyMemberInfoBoardList.append(board)
-			self.__ArrangePartyMemberInfoBoard()
-			self.UpdateRect()
+			if not name:
+				name = localeInfo.PARTY_MEMBER_OFFLINE
 
-		if not name:
-			name = localeInfo.PARTY_MEMBER_OFFLINE
+			board.SetCharacterName(name)
+			board.Unlink()
 
-		board.SetCharacterName(name)
-		board.Unlink()
+			self.Show()
+	else:
+		def AddPartyMember(self, pid, name):
 
-		self.Show()
+			board = self.__FindPartyMemberInfoBoardByPID(pid)
+
+			if None == board:
+
+				board = PartyMemberInfoBoard()
+				board.SetParent(self)
+				board.SetCharacterPID(pid)
+
+				self.partyMemberInfoBoardList.append(board)
+				self.__ArrangePartyMemberInfoBoard()
+				self.UpdateRect()
+
+			if not name:
+				name = localeInfo.PARTY_MEMBER_OFFLINE
+
+			board.SetCharacterName(name)
+			board.Unlink()
+
+			self.Show()
 
 	def RemovePartyMember(self, pid):
 
@@ -653,6 +716,11 @@ class PartyWindow(ui.Window):
 		state = player.GetPartyMemberState(pid)
 		hpPercentage = player.GetPartyMemberHPPercentage(pid)
 		affectsList = player.GetPartyMemberAffects(pid)
+		if app.ENABLE_PARTY_UPDATE:
+			level = player.GetPartyMemberLevel(pid)
+			board.SetCharacterLevel(level, pid)
+			race = player.GetPartyMemberRace(pid)
+			board.SetCharacterRace(race, pid)
 
 		board.SetCharacterState(state)
 		board.SetCharacterHP(hpPercentage)
