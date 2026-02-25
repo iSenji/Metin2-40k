@@ -114,6 +114,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 			if app.ENABLE_PARTY_UPDATE:
 				self.levelTextLine = self.GetChild("LevelPrint")
 				self.faceImage = self.GetChild("Face_Image")
+				self.faceSlot=self.GetChild("Face_Slot")
 			self.gauge = self.GetChild("Gauge")
 			self.stateButton = self.GetChild("StateButton")
 			self.partyAffectImageList.append(self.GetChild("ExperienceImage"))
@@ -139,6 +140,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 		if app.ENABLE_PARTY_UPDATE:
 			self.levelTextLine = None
 			self.faceImage = None
+			self.faceSlot = None
 		self.gauge = None
 		self.stateButton = None
 		self.partyAffectImageList = []
