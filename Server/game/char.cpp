@@ -4042,6 +4042,9 @@ void CHARACTER::mining_cancel()
 	{
 		sys_log(0, "XXX MINING CANCEL");
 		event_cancel(&m_pkMiningEvent);
+	#ifdef ENABLE_MINING_TIMER
+		mining::MiningTimer(this, MINING_TIMER_SUBHEADER_GC_RESET , 0)
+	#endif
 		ChatPacket(CHAT_TYPE_INFO, LC_TEXT("채광을 중단하였습니다."));
 	}
 }

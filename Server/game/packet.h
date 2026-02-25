@@ -280,6 +280,12 @@ enum
 	//HYBRID CRYPT
 
 	HEADER_GC_AUTH_SUCCESS_OPENID	= 154,
+#ifdef ENABLE_FISHING_TIMER
+	HEADER_GC_FISHING_TIMER			= 156,
+#endif
+#ifdef ENABLE_MINING_TIMER
+	HEADER_GC_MINING_TIMER			= 157,
+#endif
 
 	// ROULETTE
 	HEADER_GC_ROULETTE					= 200, 
@@ -2396,6 +2402,36 @@ typedef struct SPacketGCStateCheck
 	unsigned long index;
 	unsigned char state;
 } TPacketGCStateCheck;
+
+#ifdef ENABLE_FISHING_TIMER
+enum EFishingTimerTypes
+{
+	FISHING_TIMER_SUBHEADER_GC_RESET,
+	FISHING_TIMER_SUBHEADER_GC_WAITING,
+	FISHING_TIMER_SUBHEADER_GC_GET,
+};
+
+typedef struct SPacketGCFishingTimer
+{
+	BYTE header;
+	BYTE subHeader;
+	BYTE timer;
+} TPacketGCFishingTimer;
+#endif
+#ifdef ENABLE_MINING_TIMER
+enum EMiningTimerTypes
+{
+	MINING_TIMER_SUBHEADER_GC_RESET,
+	MINING_TIMER_SUBHEADER_GC_WAITING,
+};
+
+typedef struct SPacketGCMiningTimer
+{
+	BYTE header;
+	BYTE subHeader;
+	BYTE timer;
+} TPacketGCMiningTimer;
+#endif
 
 #pragma pack()
 #endif

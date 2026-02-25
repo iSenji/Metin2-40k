@@ -7,6 +7,9 @@ namespace mining
 	DWORD GetRawOreFromLoad(DWORD dwLoadVnum);
 	bool OreRefine(LPCHARACTER ch, LPCHARACTER npc, LPITEM item, int cost, int pct, LPITEM metinstone_item);
 	int GetFractionCount();
+#ifdef ENABLE_MINING_TIMER
+	extern void MiningTimer(LPCHARACTER ch, BYTE miningType, BYTE miningTime)
+#endif
 
 	// REFINE_PICK
 	int RealRefinePick(LPCHARACTER ch, LPITEM item);

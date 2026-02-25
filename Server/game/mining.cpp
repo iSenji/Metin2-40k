@@ -116,6 +116,17 @@ namespace mining
 		return 0; 
 	}
 
+#ifdef ENABLE_MINING_TIMER
+	void MiningTimer(LPCHARACTER ch, BYTE miningType, BYTE miningTime)
+	{
+		TPacketGCminingTimer p{};
+		p.header = HEADER_GC_MINING_TIMER;
+		p.subHeader = miningType;
+		p.timer = miningTime;
+		ch->GetDesc()->Packet(&p, sizeof(p));
+	}
+#endif
+
 	void OreDrop(LPCHARACTER ch, DWORD dwLoadVnum)
 	{
 		DWORD dwRawOreVnum = GetRawOreFromLoad(dwLoadVnum);
@@ -292,7 +303,7 @@ namespace mining
 		CItem& pick = *item;
 		Pick_MaxCurExp(pick);
 
-		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("°î±ªÀÌ ¼ö·Ãµµ°¡ ÃÖ´ë(%d)°¡ µÇ¾ú½À´Ï´Ù."), Pick_GetCurExp(pick));
+		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½î±ªï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö´ï¿½(%d)ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."), Pick_GetCurExp(pick));
 	}
 
 	void PracticePick(LPCHARACTER ch, LPITEM item)
@@ -312,20 +323,20 @@ namespace mining
 
 			if (Pick_Refinable(pick))
 			{
-				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("°î±ªÀÌ°¡ ÃÖ´ë ¼ö·Ãµµ¿¡ µµ´ÞÇÏ¿´½À´Ï´Ù."));
-				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("³ª¹«²Û¸¦ ÅëÇØ ´ÙÀ½ ·¹º§ÀÇ °î±ªÀÌ·Î ¾÷±×·¹ÀÌµå ÇÒ ¼ö ÀÖ½À´Ï´Ù."));
+				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½î±ªï¿½Ì°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."));
+				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½î±ªï¿½Ì·ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½."));
 			}
 			else
 			{
 				Pick_IncCurExp(pick);	
 
-				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("°î±ªÀÌÀÇ ¼ö·Ãµµ°¡ Áõ°¡ÇÏ¿´½À´Ï´Ù! (%d/%d)"),
+				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½î±ªï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½! (%d/%d)"),
 						Pick_GetCurExp(pick), Pick_GetMaxExp(pick));
 
 				if (Pick_Refinable(pick))
 				{
-					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("°î±ªÀÌ°¡ ÃÖ´ë ¼ö·Ãµµ¿¡ µµ´ÞÇÏ¿´½À´Ï´Ù."));
-					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("³ª¹«²Û¸¦ ÅëÇØ ´ÙÀ½ ·¹º§ÀÇ °î±ªÀÌ·Î ¾÷±×·¹ÀÌµå ÇÒ ¼ö ÀÖ½À´Ï´Ù."));
+					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½î±ªï¿½Ì°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."));
+					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½î±ªï¿½Ì·ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½."));
 				}
 			}
 		}
@@ -355,14 +366,14 @@ namespace mining
 		// REFINE_PICK
 		if (!pick || !Pick_Check(*pick))
 		{
-			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("°î±ªÀÌ¸¦ µé°í ÀÖÁö ¾Ê¾Æ¼­ Ä¶ ¼ö ¾ø½À´Ï´Ù."));
+			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½î±ªï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æ¼ï¿½ Ä¶ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."));
 			return 0;
 		}
 		// END_OF_REFINE_PICK
 
 		if (!load)
 		{
-			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("´õÀÌ»ó Ä³³¾ ¼ö ¾ø½À´Ï´Ù."));
+			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ï¿½ï¿½ï¿½Ì»ï¿½ Ä³ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."));
 			return 0;
 		}
 
@@ -371,11 +382,11 @@ namespace mining
 		if (number(1, 100) <= iPct)
 		{
 			OreDrop(ch, load->GetRaceNum());
-			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("Ã¤±¤¿¡ ¼º°øÇÏ¿´½À´Ï´Ù."));
+			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."));
 		}
 		else
 		{
-			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("Ã¤±¤¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù."));
+			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."));
 		}
 
 		PracticePick(ch, pick);
@@ -389,6 +400,9 @@ namespace mining
 		info->pid = ch->GetPlayerID();
 		info->vid_load = load->GetVID();
 
+	#ifdef ENABLE_MINING_TIMER
+		MiningTimer(ch, MINING_TIMER_SUBHEADER_GC_WAITING, (2*count));
+	#endif
 		return event_create(mining_event, info, PASSES_PER_SEC(2 * count));
 	}
 
