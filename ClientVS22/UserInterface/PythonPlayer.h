@@ -7,13 +7,13 @@
 class CInstanceBase;
 
 /*
- *	¸ŞÀÎ Ä³¸¯ÅÍ (ÀÚ½ÅÀÌ Á¶Á¤ÇÏ´Â Ä³¸¯ÅÍ) °¡ °¡Áø Á¤º¸µéÀ» °ü¸®ÇÑ´Ù.
+ *	ë©”ì¸ ìºë¦­í„° (ìì‹ ì´ ì¡°ì •í•˜ëŠ” ìºë¦­í„°) ê°€ ê°€ì§„ ì •ë³´ë“¤ì„ ê´€ë¦¬í•œë‹¤.
  *
- * 2003-01-12 Levites	º»·¡´Â CPythonCharacter°¡ °¡Áö°í ÀÖ¾úÁö¸¸ ±Ô¸ğ°¡ ³Ê¹« Ä¿Á® ¹ö¸°µ¥´Ù
- *						À§Ä¡µµ ¾Ö¸ÅÇØ¼­ µû·Î ºĞ¸®
- * 2003-07-19 Levites	¸ŞÀÎ Ä³¸¯ÅÍÀÇ ÀÌµ¿ Ã³¸® CharacterInstance¿¡¼­ ¶¼¾î´Ù ºÙÀÓ
- *						±âÁ¸ÀÇ µ¥ÀÌÅ¸ º¸Á¸ÀÇ ¿ªÇÒ¿¡¼­ ¿Ïº®ÇÑ ¸ŞÀÎ ÇÃ·¹ÀÌ¾î Á¦¾î Å¬·¡½º·Î
- *						Å»¹Ù²Ş ÇÔ.
+ * 2003-01-12 Levites	ë³¸ë˜ëŠ” CPythonCharacterê°€ ê°€ì§€ê³  ìˆì—ˆì§€ë§Œ ê·œëª¨ê°€ ë„ˆë¬´ ì»¤ì ¸ ë²„ë¦°ë°ë‹¤
+ *						ìœ„ì¹˜ë„ ì• ë§¤í•´ì„œ ë”°ë¡œ ë¶„ë¦¬
+ * 2003-07-19 Levites	ë©”ì¸ ìºë¦­í„°ì˜ ì´ë™ ì²˜ë¦¬ CharacterInstanceì—ì„œ ë–¼ì–´ë‹¤ ë¶™ì„
+ *						ê¸°ì¡´ì˜ ë°ì´íƒ€ ë³´ì¡´ì˜ ì—­í• ì—ì„œ ì™„ë²½í•œ ë©”ì¸ í”Œë ˆì´ì–´ ì œì–´ í´ë˜ìŠ¤ë¡œ
+ *						íƒˆë°”ê¿ˆ í•¨.
  */
 
 class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
@@ -88,8 +88,8 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 			float fnextEfficientPercentage;
 			BOOL isCoolTime;
 
-			float fCoolTime;			// NOTE : ÄğÅ¸ÀÓ ÁßÀÎ ½ºÅ³ ½½·ÔÀ»
-			float fLastUsedTime;		//        ÄüÃ¢¿¡ µî·ÏÇÒ ¶§ »ç¿ëÇÏ´Â º¯¼ö
+			float fCoolTime;			// NOTE : ì¿¨íƒ€ì„ ì¤‘ì¸ ìŠ¤í‚¬ ìŠ¬ë¡¯ì„
+			float fLastUsedTime;		//        í€µì°½ì— ë“±ë¡í•  ë•Œ ì‚¬ìš©í•˜ëŠ” ë³€ìˆ˜
 			BOOL bActive;
 		} TSkillInstance;
 
@@ -130,7 +130,11 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 
 		typedef struct SPartyMemberInfo
 		{
-			SPartyMemberInfo(DWORD _dwPID, const char * c_szName) : dwPID(_dwPID), strName(c_szName), dwVID(0) {}
+#ifdef ENABLE_PARTY_UPDATE
+			SPartyMemberInfo(DWORD _dwPID, const char* c_szName, DWORD dwRace, DWORD dwLevel) : dwPID(_dwPID), strName(c_szName), dwVID(0), byState(0), byHPPercentage(0), dwRace(dwRace), dwLevel(dwLevel) { memset(&sAffects, 0, sizeof(sAffects)); }
+#else
+			SPartyMemberInfo(DWORD _dwPID, const char * c_szName) : dwPID(_dwPID), strName(c_szName), dwVID(0), byState(0), byHPPercentage(0) { memset(&sAffects, 0, sizeof(sAffects)); }
+#endif
 
 			DWORD dwVID;
 			DWORD dwPID;
@@ -138,6 +142,10 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 			BYTE byState;
 			BYTE byHPPercentage;
 			short sAffects[PARTY_AFFECT_SLOT_MAX_NUM];
+#ifdef ENABLE_PARTY_UPDATE
+			DWORD dwRace;
+			DWORD dwLevel;
+#endif
 		} TPartyMemberInfo;
 
 		enum EPartyRole
@@ -161,15 +169,15 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 			SKILL_PERFECT_MASTER,
 		};
 
-		// ÀÚµ¿¹°¾à »óÅÂ °ü·Ã Æ¯È­ ±¸Á¶Ã¼.. ÀÌ·±½ÄÀÇ Æ¯È­ Ã³¸® ÀÛ¾÷À» ¾È ÇÏ·Á°í ÃÖ´ëÇÑ ³ë·ÂÇßÁö¸¸ ½ÇÆĞÇÏ°í °á±¹ Æ¯È­Ã³¸®.
+		// ìë™ë¬¼ì•½ ìƒíƒœ ê´€ë ¨ íŠ¹í™” êµ¬ì¡°ì²´.. ì´ëŸ°ì‹ì˜ íŠ¹í™” ì²˜ë¦¬ ì‘ì—…ì„ ì•ˆ í•˜ë ¤ê³  ìµœëŒ€í•œ ë…¸ë ¥í–ˆì§€ë§Œ ì‹¤íŒ¨í•˜ê³  ê²°êµ­ íŠ¹í™”ì²˜ë¦¬.
 		struct SAutoPotionInfo
 		{
 			SAutoPotionInfo() : bActivated(false), totalAmount(0), currentAmount(0) {}
 
-			bool bActivated;					// È°¼ºÈ­ µÇ¾ú´Â°¡?			
-			long currentAmount;					// ÇöÀç ³²Àº ¾ç
-			long totalAmount;					// ÀüÃ¼ ¾ç
-			long inventorySlotIndex;			// »ç¿ëÁßÀÎ ¾ÆÀÌÅÛÀÇ ÀÎº¥Åä¸®»ó ½½·Ô ÀÎµ¦½º
+			bool bActivated;					// í™œì„±í™” ë˜ì—ˆëŠ”ê°€?			
+			long currentAmount;					// í˜„ì¬ ë‚¨ì€ ì–‘
+			long totalAmount;					// ì „ì²´ ì–‘
+			long inventorySlotIndex;			// ì‚¬ìš©ì¤‘ì¸ ì•„ì´í…œì˜ ì¸ë²¤í† ë¦¬ìƒ ìŠ¬ë¡¯ ì¸ë±ìŠ¤
 		};
 
 		enum EAutoPotionType
@@ -227,7 +235,7 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 
 
 		// Reserved
-		bool	NEW_IsEmptyReservedDelayTime(float fElapsedtime);	// ³×ÀÌ¹Ö ±³Á¤ ³íÀÇ ÇÊ¿ä - [levites]
+		bool	NEW_IsEmptyReservedDelayTime(float fElapsedtime);	// ë„¤ì´ë° êµì • ë…¼ì˜ í•„ìš” - [levites]
 
 
 		// Dungeon
@@ -240,7 +248,7 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 
 		// flying target set
 		void	Clear();
-		void	ClearSkillDict(); // ¾ø¾îÁö°Å³ª ClearGame ÂÊÀ¸·Î Æ÷ÇÔµÉ ÇÔ¼ö
+		void	ClearSkillDict(); // ì—†ì–´ì§€ê±°ë‚˜ ClearGame ìª½ìœ¼ë¡œ í¬í•¨ë  í•¨ìˆ˜
 		void	NEW_ClearSkillData(bool bAll = false);
 
 		void	Update();
@@ -360,10 +368,18 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 
 		// Party
 		void	ExitParty();
+#ifdef ENABLE_PARTY_UPDATE
+		void	AppendPartyMember(DWORD dwPID, const char * c_szName, DWORD dwRace, DWORD dwLevel);
+#else
 		void	AppendPartyMember(DWORD dwPID, const char * c_szName);
+#endif
 		void	LinkPartyMember(DWORD dwPID, DWORD dwVID);
 		void	UnlinkPartyMember(DWORD dwPID);
+#ifdef ENABLE_PARTY_UPDATE
+		void	UpdatePartyMemberInfo(DWORD dwPID, BYTE byState, BYTE byHPPercentage, DWORD dwRace, DWORD dwLevel);
+#else
 		void	UpdatePartyMemberInfo(DWORD dwPID, BYTE byState, BYTE byHPPercentage);
+#endif
 		void	UpdatePartyMemberAffect(DWORD dwPID, BYTE byAffectSlotIndex, short sAffectNumber);
 		void	RemovePartyMember(DWORD dwPID);
 		bool	IsPartyMemberByVID(DWORD dwVID);
