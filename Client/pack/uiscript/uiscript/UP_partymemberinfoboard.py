@@ -43,7 +43,7 @@ window = {
 					"name" : "NamePrint",
 					"type" : "text",
 
-					"x" : 3,
+					"x" : 3+27,
 					"y" : 2,
 
 					"text" : uiScriptLocale.PARTY_MEMBER_INFO_NAME,
@@ -62,7 +62,16 @@ window = {
 			"width" : 84,
 			"color" : "red",
 		},
+		{
+			"name" : "GaugeEXP",
+			"type" : "gauge",
+			"style" : ("not_pick",),
 
+			"x" : 22,
+			"y" : 32,
+			"width" : 84,
+			"color" : "yellow",
+		},
 		{
 			"name" : "ExperienceImage",
 			"type" : "image",

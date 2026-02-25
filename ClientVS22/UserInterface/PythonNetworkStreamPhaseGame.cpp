@@ -2978,7 +2978,7 @@ bool CPythonNetworkStream::RecvPartyUpdate()
 	BYTE byOldState = pPartyMemberInfo->byState;
 
 #ifdef ENABLE_PARTY_UPDATE
-	CPythonPlayer::Instance().UpdatePartyMemberInfo(kPartyUpdatePacket.pid, kPartyUpdatePacket.state, kPartyUpdatePacket.percent_hp, kPartyUpdatePacket.race, kPartyUpdatePacket.level);
+	CPythonPlayer::Instance().UpdatePartyMemberInfo(kPartyUpdatePacket.pid, kPartyUpdatePacket.state, kPartyUpdatePacket.percent_hp, kPartyUpdatePacket.race, kPartyUpdatePacket.level, kPartyUpdatePacket.percent_exp);
 #else
 	CPythonPlayer::Instance().UpdatePartyMemberInfo(kPartyUpdatePacket.pid, kPartyUpdatePacket.state, kPartyUpdatePacket.percent_hp);
 #endif

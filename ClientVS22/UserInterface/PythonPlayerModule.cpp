@@ -2255,6 +2255,18 @@ PyObject* playerGetPartyMemberRace(PyObject* poSelf, PyObject* poArgs)
 
 	return Py_BuildValue("i", pPartyMemberInfo->dwRace);
 }
+PyObject * playerGetPartyMemberEXPPercentage(PyObject* poSelf, PyObject* poArgs)
+{
+	int iPID;
+	if (!PyTuple_GetInteger(poArgs, 0, &iPID))
+		return Py_BuildException();
+
+	CPythonPlayer::TPartyMemberInfo * pPartyMemberInfo;
+	if (!CPythonPlayer::Instance().GetPartyMemberPtr(iPID, &pPartyMemberInfo))
+		return Py_BuildValue("i", FALSE);
+
+	return Py_BuildValue("i", pPartyMemberInfo->byEXPPercentage);
+}
 #endif
 
 void initPlayer()
@@ -2440,6 +2452,7 @@ void initPlayer()
 #ifdef ENABLE_PARTY_UPDATE
 		{ "GetPartyMemberRace",			playerGetPartyMemberRace,			METH_VARARGS },
 		{ "GetPartyMemberLevel",		playerGetPartyMemberLevel,			METH_VARARGS },
+		{ "GetPartyMemberEXPPercentage",playerGetPartyMemberEXPPercentage,	METH_VARARGS },
 #endif
 		{ NULL,							NULL,								NULL },
 	};

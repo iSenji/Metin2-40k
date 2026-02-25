@@ -841,6 +841,7 @@ void CParty::SendPartyInfoOneToAll(DWORD pid)
 	LPCHARACTER ch = CHARACTER_MANAGER::instance().FindByPID(pid);
 	p.race = ch ? ch->GetRaceNum() : it->second.dwRace;
 	p.level = ch ? ch->GetLevel() : it->second.dwLevel;
+	p.percent_exp = 255;
 #endif
 
 	for (it = m_memberMap.begin();it!= m_memberMap.end(); ++it)
@@ -891,6 +892,7 @@ void CParty::SendPartyInfoAllToOne(LPCHARACTER ch)
 #ifdef ENABLE_PARTY_UPDATE
 			p.race = it->second.dwRace;
 			p.level = it->second.dwLevel;
+			p.percent_exp = 255;
 #endif
 			ch->GetDesc()->Packet(&p, sizeof(p));
 			continue;

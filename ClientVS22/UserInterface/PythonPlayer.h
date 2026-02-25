@@ -145,6 +145,7 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 #ifdef ENABLE_PARTY_UPDATE
 			DWORD dwRace;
 			DWORD dwLevel;
+			BYTE byEXPPercentage;
 #endif
 		} TPartyMemberInfo;
 
@@ -376,7 +377,7 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 		void	LinkPartyMember(DWORD dwPID, DWORD dwVID);
 		void	UnlinkPartyMember(DWORD dwPID);
 #ifdef ENABLE_PARTY_UPDATE
-		void	UpdatePartyMemberInfo(DWORD dwPID, BYTE byState, BYTE byHPPercentage, DWORD dwRace, DWORD dwLevel);
+		void	UpdatePartyMemberInfo(DWORD dwPID, BYTE byState, BYTE byHPPercentage, DWORD dwRace, DWORD dwLevel, BYTE byEXPPercentage);
 #else
 		void	UpdatePartyMemberInfo(DWORD dwPID, BYTE byState, BYTE byHPPercentage);
 #endif

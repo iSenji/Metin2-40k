@@ -1623,6 +1623,7 @@ typedef struct packet_party_update
 #ifdef ENABLE_PARTY_UPDATE
 	DWORD	race;
 	DWORD	level;
+	BYTE	percent_exp;
 #endif
 } TPacketGCPartyUpdate;
 

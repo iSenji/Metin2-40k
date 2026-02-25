@@ -1334,7 +1334,7 @@ void CPythonPlayer::UnlinkPartyMember(DWORD dwPID)
 
 void CPythonPlayer::UpdatePartyMemberInfo(DWORD dwPID, BYTE byState, BYTE byHPPercentage
 #ifdef ENABLE_PARTY_UPDATE
-	, DWORD dwRace, DWORD dwLevel
+	, DWORD dwRace, DWORD dwLevel, BYTE byEXPPercentage
 #endif
 	)
 {
@@ -1350,6 +1350,7 @@ void CPythonPlayer::UpdatePartyMemberInfo(DWORD dwPID, BYTE byState, BYTE byHPPe
 #ifdef ENABLE_PARTY_UPDATE
 	pPartyMemberInfo->dwRace = dwRace;
 	pPartyMemberInfo->dwLevel = dwLevel;
+	pPartyMemberInfo->byEXPPercentage = byEXPPercentage;
 #endif
 }
 

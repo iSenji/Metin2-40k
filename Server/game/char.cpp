@@ -5863,6 +5863,7 @@ bool CHARACTER::BuildUpdatePartyPacket(TPacketGCPartyUpdate & out)
 #ifdef ENABLE_PARTY_UPDATE
 	out.race = GetRaceNum();
 	out.level = GetLevel();
+	out.percent_exp = MINMAX(0, (int64_t)GetExp() * 100 / GetNextExp(), 100);
 #endif
 
 	sys_log(1, "PARTY %s role is %d", GetName(), out.role);

@@ -101,7 +101,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 	def __LoadBoard(self):
 		try:
 			pyScrLoader = ui.PythonScriptLoader()
-			if  app.ENABLE_PARTY_UPDATE:
+			if app.ENABLE_PARTY_UPDATE:
 				pyScrLoader.LoadScriptFile(self, "UIScript/Up_PartyMemberInfoBoard.py")
 			else:
 				pyScrLoader.LoadScriptFile(self, "UIScript/PartyMemberInfoBoard.py")
@@ -115,6 +115,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 				self.levelTextLine = self.GetChild("LevelPrint")
 				self.faceImage = self.GetChild("Face_Image")
 				self.faceSlot=self.GetChild("Face_Slot")
+				self.gaugeEXP = self.GetChild("GaugeEXP")
 			self.gauge = self.GetChild("Gauge")
 			self.stateButton = self.GetChild("StateButton")
 			self.partyAffectImageList.append(self.GetChild("ExperienceImage"))
@@ -141,6 +142,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 			self.levelTextLine = None
 			self.faceImage = None
 			self.faceSlot = None
+			self.gaugeEXP = None
 		self.gauge = None
 		self.stateButton = None
 		self.partyAffectImageList = []
@@ -307,6 +309,11 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 		hpPercentage = max(0, hpPercentage)
 		self.gauge.SetPercentage(hpPercentage, 100)
 
+	if app.ENABLE_PARTY_UPDATE
+		def SetCharacterEXP(self, EXPPercentage):
+			EXPPercentage = max(0, EXPPercentage)
+			self.gaugeEXP.SetPercentage(EXPPercentage, 100)
+
 	def SetCharacterState(self, state):
 
 		if self.state == state:
@@ -340,6 +347,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 		if app.ENABLE_PARTY_UPDATE:
 			self.levelTextLine.SetPackedFontColor(self.LINK_COLOR)
 			self.faceImage.Show()
+			self.gaugeEXP.Show()
 		self.gauge.Show()
 
 	def Unlink(self):
@@ -348,6 +356,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 		if app.ENABLE_PARTY_UPDATE:
 			self.levelTextLine.SetPackedFontColor(self.UNLINK_COLOR)
 			self.faceImage.Hide()
+			self.gaugeEXP.Hide()
 		self.gauge.Hide()
 		self.__HideAllAffects()
 
@@ -723,6 +732,8 @@ class PartyWindow(ui.Window):
 			board.SetCharacterLevel(level, pid)
 			race = player.GetPartyMemberRace(pid)
 			board.SetCharacterRace(race, pid)
+			EXPPercentage = player.GetPartyMemberEXPPercentage(pid)
+			board.SetCharacterEXP(EXPPercentage)
 
 		board.SetCharacterState(state)
 		board.SetCharacterHP(hpPercentage)
