@@ -1,4 +1,4 @@
-#define LOCALE_SERVICE_SINGAPORE			// ½Ì°¡Æú
+#define LOCALE_SERVICE_SINGAPORE			// Â½ÃŒÂ°Â¡Ã†Ãº
 #define ENABLE_COSTUME_SYSTEM
 #define ENABLE_ENERGY_SYSTEM
 #define ENABLE_DRAGON_SOUL_SYSTEM
@@ -22,8 +22,10 @@
 //#define ADVANCED_MOB_RESIST
 
 #define ENABLE_CPP_PSM																// fast loading
-//#define ENABLE_COSTUME_MOUNT
-//#define ENABLE_COSTUME_PET
+#define ENABLE_COSTUME_MOUNT
+#define ENABLE_COSTUME_PET
+#define ENABLE_PARTY_UPDATE
+
 
 //#define ENABLE_RARITY_SYSTEM
 
