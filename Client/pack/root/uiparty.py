@@ -101,8 +101,8 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 	def __LoadBoard(self):
 		try:
 			pyScrLoader = ui.PythonScriptLoader()
-			if localeInfo.IsJAPAN():
-				pyScrLoader.LoadScriptFile(self, uiScriptLocale.LOCALE_UISCRIPT_PATH + "PartyMemberInfoBoard.py")
+			if  app.ENABLE_PARTY_UPDATE:
+				pyScrLoader.LoadScriptFile(self, "UIScript/Up_PartyMemberInfoBoard.py")
 			else:
 				pyScrLoader.LoadScriptFile(self, "UIScript/PartyMemberInfoBoard.py")
 		except:
