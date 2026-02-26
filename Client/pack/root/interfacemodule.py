@@ -44,6 +44,10 @@ import uiScriptLocale
 
 import event
 import localeInfo
+if app.ENABLE_FISHING_TIMER:
+	import uiFishingTimer
+if app.ENABLE_MINING_TIMER:
+	import uiMiningTimer
 
 IsQBHide = 0
 class Interface(object):
@@ -74,6 +78,10 @@ class Interface(object):
 		self.wndMiniMap = None
 		self.wndGuild = None
 		self.wndGuildBuilding = None
+		if app.ENABLE_FISHING_TIMER:
+			self.wndFishingTimer = None
+		if app.ENABLE_MINING_TIMER:
+			self.wndMiningTimer = None
 
 		self.listGMName = {}
 		self.wndQuestWindow = {}
@@ -194,6 +202,10 @@ class Interface(object):
 		self.wndMiniMap = wndMiniMap
 		self.wndSafebox = wndSafebox
 		self.wndChatLog = wndChatLog
+		if app.ENABLE_FISHING_TIMER:
+			self.wndFishingTimer = uiFishingTimer.FishingTimerWindow()
+		if app.ENABLE_MINING_TIMER:
+			self.wndMiningTimer = uiMiningTimer.MiningTimerWindow()
 		
 		if app.ENABLE_DRAGON_SOUL_SYSTEM:
 			self.wndDragonSoul.SetDragonSoulRefineWindow(self.wndDragonSoulRefine)
@@ -358,6 +370,15 @@ class Interface(object):
 				eachQuestWindow = None
 		self.wndQuestWindow = {}
 
+		if app.ENABLE_FISHING_TIMER:
+			if self.wndFishingTimer:
+				self.wndFishingTimer.Destroy()
+
+		if app.ENABLE_MINING_TIMER:
+			if self.wndMiningTimer:
+				self.wndMiningTimer.Destroy()
+
+
 		if self.wndChat:
 			self.wndChat.Destroy()
 
@@ -469,6 +490,10 @@ class Interface(object):
 		del self.mallPageDlg
 		# END_OF_ITEM_MALL
 
+		if app.ENABLE_FISHING_TIMER:
+			del self.wndFishingTimer
+		if app.ENABLE_MINING_TIMER:
+			del self.wndMiningTimer
 		del self.wndGuild
 		del self.wndMessenger
 		del self.wndUICurtain
@@ -866,6 +891,15 @@ class Interface(object):
 		if self.wndGuild:
 			self.wndGuild.Hide()
 			
+		if app.ENABLE_FISHING_TIMER:
+			if self.wndFishingTimer:
+				self.wndFishingTimer.Hide()
+
+		if app.ENABLE_MINING_TIMER:
+			if self.wndMiningTimer:
+				self.wndMiningTimer.Hide()
+
+
 		if self.wndExpandedTaskBar:
 			self.wndExpandedTaskBar.Hide()
  
@@ -1685,6 +1719,16 @@ class Interface(object):
 
 	def EmptyFunction(self):
 		pass
+
+	if app.ENABLE_FISHING_TIMER:
+		def GetFishingTimer(self, timeType, time):
+			if self.wndFishingTimer:
+				self.wndFishingTimer.GetFishingTimer(timeType, time)
+
+	if app.ENABLE_MINING_TIMER:
+		def GetMiningTimer(self, timeType, time):
+			if self.wndMiningTimer:
+				self.wndMiningTimer.GetMiningTimer(timeType, time)
 
 if __name__ == "__main__":
 

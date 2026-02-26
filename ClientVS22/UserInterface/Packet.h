@@ -334,6 +334,13 @@ enum
 
 	HEADER_GC_AUTH_SUCCESS_OPENID				= 154,
 
+#ifdef ENABLE_FISHING_TIMER
+	HEADER_GC_FISHING_TIMER						= 156,
+#endif
+#ifdef ENABLE_MINING_TIMER
+	HEADER_GC_MINING_TIMER						= 157,
+#endif
+
 	HEADER_GC_RUNUP_MATRIX_QUIZ                 = 201,
 	HEADER_GC_NEWCIBN_PASSPOD_REQUEST			= 202,
 	HEADER_GC_NEWCIBN_PASSPOD_FAILURE			= 203,
@@ -2832,5 +2839,36 @@ typedef struct SChannelStatus
 	short nPort;
 	BYTE bStatus;
 } TChannelStatus;
+
+#ifdef ENABLE_FISHING_TIMER
+enum EFishingTimerTypes
+{
+	FISHING_TIMER_SUBHEADER_GC_RESET,
+	FISHING_TIMER_SUBHEADER_GC_WAITING,
+	FISHING_TIMER_SUBHEADER_GC_GET,
+};
+
+typedef struct SPacketGCFishingTimer
+{
+	BYTE header;
+	BYTE subHeader;
+	BYTE timer;
+} TPacketGCFishingTimer;
+#endif
+#ifdef ENABLE_MINING_TIMER
+enum EMiningTimerTypes
+{
+	MINING_TIMER_SUBHEADER_GC_RESET,
+	MINING_TIMER_SUBHEADER_GC_WAITING,
+	MINING_TIMER_SUBHEADER_GC_GET,
+};
+
+typedef struct SPacketGCMiningTimer
+{
+	BYTE header;
+	BYTE subHeader;
+	BYTE timer;
+} TPacketGCMiningTimer;
+#endif
 
 #pragma pack(pop)

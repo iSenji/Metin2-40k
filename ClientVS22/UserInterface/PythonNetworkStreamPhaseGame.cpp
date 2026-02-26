@@ -630,6 +630,17 @@ void CPythonNetworkStream::GamePhase()
 				ret = RecvDragonSoulRefine();
 				break;
 
+#ifdef ENABLE_FISHING_TIMER
+			case HEADER_GC_FISHING_TIMER:
+				ret = RecvFishingTimer();
+				break;
+#endif
+#ifdef ENABLE_MINING_TIMER
+			case HEADER_GC_MINING_TIMER:
+				ret = RecvMiningTimer();
+				break;
+#endif
+
 			default:
 				ret = RecvDefaultPacket(header);
 				break;
@@ -4458,6 +4469,30 @@ bool CPythonNetworkStream::SendDragonSoulRefinePacket(BYTE bRefineType, TItemPos
 	return true;
 }
 
+#ifdef ENABLE_FISHING_TIMER
+bool CPythonNetworkStream::RecvFishingTimer()
+{
+	TPacketGCFishingTimer packet;
+	if (!Recv(sizeof(packet), &packet))
+		return false;
+
+	PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_GAME], "BINARY_GetFishingTimer", Py_BuildValue("(ii)", packet.subHeader, packet.timer));
+
+	return true;
+}
+#endif
+#ifdef ENABLE_MINING_TIMER
+bool CPythonNetworkStream::RecvMiningTimer()
+{
+	TPacketGCMiningTimer packet;
+	if (!Recv(sizeof(packet), &packet))
+		return false;
+
+	PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_GAME], "BINARY_GetMiningTimer", Py_BuildValue("(ii)", packet.subHeader, packet.timer));
+
+	return true;
+}
+#endif
 
 #if defined(ENABLE_DISCORD_RPC)
 #include "discord_rpc.h"

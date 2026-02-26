@@ -950,6 +950,17 @@ class GameWindow(ui.ScriptWindow):
 	def OnSafeBoxError(self):
 		self.PopupMessage(localeInfo.SAFEBOX_ERROR)
 
+	if app.ENABLE_FISHING_TIMER:
+		def BINARY_GetFishingTimer(self, timeType, time):
+			if self.interface:
+				self.interface.GetFishingTimer(timeType, time)
+
+	if app.ENABLE_MINING_TIMER:
+		def BINARY_GetMiningTimer(self, timeType, time):
+			if self.interface:
+				self.interface.GetMiningTimer(timeType, time)
+
+
 	def OnFishingSuccess(self, isFish, fishName):
 		chat.AppendChatWithDelay(chat.CHAT_TYPE_INFO, localeInfo.FISHING_SUCCESS(isFish, fishName), 2000)
 

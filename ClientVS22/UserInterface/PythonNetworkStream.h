@@ -159,7 +159,7 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		bool SendQuickSlotDelPacket(BYTE wpos);
 		bool SendQuickSlotMovePacket(BYTE wpos, BYTE change_pos);
 
-		// PointReset °³ ÀÓ½Ã
+		// PointReset ï¿½ï¿½ ï¿½Ó½ï¿½
 		bool SendPointResetPacket();
 
 		// Shop
@@ -262,7 +262,7 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		// CRC Report
 		bool __SendCRCReportPacket();
 
-		// ¿ëÈ«¼® °­È­
+		// ï¿½ï¿½È«ï¿½ï¿½ ï¿½ï¿½È­
 		bool SendDragonSoulRefinePacket(BYTE bRefineType, TItemPos* pos);
 
 		// Handshake
@@ -286,7 +286,7 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		void __TEST_SetSkillGroupFake(int iIndex);
 
 	//////////////////////////////////////////////////////////////////////////
-	// Phase °ü·Ã
+	// Phase ï¿½ï¿½ï¿½ï¿½
 	//////////////////////////////////////////////////////////////////////////
 	public:
 		void SetOffLinePhase();
@@ -324,7 +324,7 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		bool SendMessengerRemovePacket(const char * c_szKey, const char * c_szName);
 
 	protected:
-		bool OnProcess();	// StateµéÀ» ½ÇÁ¦·Î ½ÇÇàÇÑ´Ù.
+		bool OnProcess();	// Stateï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		void OffLinePhase();
 		void HandShakePhase();
 		void LoginPhase();
@@ -538,10 +538,10 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		// Use Potion
 		bool RecvSpecialEffect();
 
-		// ¼­¹ö¿¡¼­ ÁöÁ¤ÇÑ ÀÌÆÑÆ® ¹ßµ¿ ÆÐÅ¶.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ßµï¿½ ï¿½ï¿½Å¶.
 		bool RecvSpecificEffect();
 		
-		// ¿ëÈ¥¼® °ü·Ã
+		// ï¿½ï¿½È¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		bool RecvDragonSoulRefine();
 
 		// MiniMap Info
@@ -558,16 +558,22 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 
 		// Channel
 		bool RecvChannelPacket();
+#ifdef ENABLE_FISHING_TIMER
+		bool RecvFishingTimer();
+#endif
+#ifdef ENABLE_MINING_TIMER
+		bool RecvMiningTimer();
+#endif
 
 		//Security
 		bool RecvHSCheckRequest();
 		bool RecvXTrapVerifyRequest();
 
 	protected:
-		// ÀÌ¸ðÆ¼ÄÜ
+		// ï¿½Ì¸ï¿½Æ¼ï¿½ï¿½
 		bool ParseEmoticon(const char * pChatMsg, DWORD * pdwEmoticon);
 
-		// ÆÄÀÌ½ãÀ¸·Î º¸³»´Â ÄÝµé
+		// ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ýµï¿½
 		void OnConnectFailure();
 		void OnScriptEventStart(int iSkin, int iIndex);
 		

@@ -1494,6 +1494,17 @@ void initapp()
 	PyModule_AddIntConstant(poModule, "CAMERA_STOP",			CPythonApplication::CAMERA_STOP);
 
 
+#ifdef ENABLE_FISHING_TIMER
+	PyModule_AddIntConstant(poModule, "ENABLE_FISHING_TIMER",	1);
+#else
+	PyModule_AddIntConstant(poModule, "ENABLE_FISHING_TIMER",	0);
+#endif
+#ifdef ENABLE_MINING_TIMER
+	PyModule_AddIntConstant(poModule, "ENABLE_MINING_TIMER",	1);
+#else
+	PyModule_AddIntConstant(poModule, "ENABLE_MINING_TIMER",	0);
+#endif
+
 #ifdef ENABLE_CPP_PSM
 	PyModule_AddIntConstant(poModule, "ENABLE_CPP_PSM", 1);
 #else
