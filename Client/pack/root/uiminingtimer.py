@@ -12,7 +12,7 @@ class MiningTimerWindow(ui.ScriptWindow):
 		self.SetSize(WIDTH, HEIGHT)
 		self.UI = {}
 
-		self.time = 0
+		self.time_mining = 0
 		self.timeType = player.MINING_TIMER_SUBHEADER_GC_RESET
 
 		self.__LoadWindow()
@@ -52,20 +52,20 @@ class MiningTimerWindow(ui.ScriptWindow):
 			self.Close()
 			return
 
-		self.time = app.GetGlobalTimeStamp() + int(time)
+		self.time_mining = app.GetGlobalTimeStamp() + int(time)
 		self.timeType = int(timeType)
 		self.Show()
 
 	def Close(self):
 		self.Hide()
-		self.time = 0
+		self.time_mining = 0
 		self.timeType = player.MINING_TIMER_SUBHEADER_GC_RESET
 
 	def OnUpdate(self):
 		if self.timeType == player.MINING_TIMER_SUBHEADER_GC_RESET:
 			return
 
-		showTime = int(self.time - app.GetGlobalTimeStamp())
+		showTime = int(self.time_mining - app.GetGlobalTimeStamp())
 
 		if showTime <= 0 and self.timeType != player.MINING_TIMER_SUBHEADER_GC_WAITING:
 			self.Close()
