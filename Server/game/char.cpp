@@ -1765,6 +1765,18 @@ BYTE CHARACTER::GetJob() const
 	return JOB_WARRIOR;
 }
 
+#ifdef ENABLE_IS_SAFEZONE_FUNCTION
+bool CHARACTER::IsSafeZone()
+{
+	if (!GetSectree() || GetSectree()->IsAttr(GetX(), GetY(), ATTR_BANPK))
+	{
+		return true;
+	}
+
+	return false;
+}
+#endif
+
 void CHARACTER::SetLevel(BYTE level)
 {
 	m_points.level = level;
