@@ -47,12 +47,12 @@ class FishingTimerWindow(ui.ScriptWindow):
 
 		self.SetTop()
 
-	def GetFishingTimer(self, timeType, timeFish):
+	def GetFishingTimer(self, timeType, time):
 		if timeType == player.FISHING_TIMER_SUBHEADER_GC_RESET:
 			self.Close()
 			return
 
-		self.fish_time = app.GetGlobalTimeStamp() + int(timeFish)
+		self.fish_time = app.GetGlobalTimeStamp() + int(time)
 		self.timeType = int(timeType)
 		self.Show()
 
