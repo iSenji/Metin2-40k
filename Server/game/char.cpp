@@ -5512,6 +5512,7 @@ bool CHARACTER::Follow(LPCHARACTER pkChr, float fMinDistance)
 			// If i'm in a party. I must obey party leader's AI.
 			if (!GetParty() || !GetParty()->GetLeader() || GetParty()->GetLeader() == this)
 			{
+#ifndef ENABLE_MOB_MOVMENT_CONTROLL
 				if (get_dword_time() - m_pkMobInst->m_dwLastAttackedTime >= 15000) // 마지막으로 공격받은지 15초가 지났고
 				{
 					// 마지막 맞은 곳으로 부터 50미터 이상 차이나면 포기하고 돌아간다.
@@ -5519,6 +5520,13 @@ bool CHARACTER::Follow(LPCHARACTER pkChr, float fMinDistance)
 						if (Return())
 							return true;
 				}
+#else
+
+				// 마지막 맞은 곳으로 부터 50미터 이상 차이나면 포기하고 돌아간다.
+				if (m_pkMobData->m_table.wAttackRange < DISTANCE_APPROX(pkChr->GetX() - GetX(), pkChr->GetY() - GetY()))
+					if (Return())
+						return true;
+#endif
 			}
 		}
 		return false;
@@ -5533,6 +5541,7 @@ bool CHARACTER::Follow(LPCHARACTER pkChr, float fMinDistance)
 		// If i'm in a party. I must obey party leader's AI.
 		if (!GetParty() || !GetParty()->GetLeader() || GetParty()->GetLeader() == this)
 		{
+#ifndef ENABLE_MOB_MOVMENT_CONTROLL
 			if (get_dword_time() - m_pkMobInst->m_dwLastAttackedTime >= 15000) // 마지막으로 공격받은지 15초가 지났고
 			{
 				// 마지막 맞은 곳으로 부터 50미터 이상 차이나면 포기하고 돌아간다.
@@ -5540,6 +5549,12 @@ bool CHARACTER::Follow(LPCHARACTER pkChr, float fMinDistance)
 					if (Return())
 						return true;
 			}
+#else
+
+			if (5000 < DISTANCE_APPROX(m_pkMobInst->m_posLastAttacked.x - GetX(), m_pkMobInst->m_posLastAttacked.y - GetY()))
+				if (Return())
+					return true;
+#endif
 		}
 	}
 
