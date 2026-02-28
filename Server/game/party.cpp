@@ -748,6 +748,7 @@ void CParty::SendPartyJoinAllToOne(LPCHARACTER ch)
 		p.pid = it->first;
 		strlcpy(p.name, it->second.strName.c_str(), sizeof(p.name));
 #ifdef ENABLE_PARTY_UPDATE
+		p.race = it->second.dwRace;
 		p.dwLevel = it->second.dwLevel;
 #endif
 		ch->GetDesc()->Packet(&p, sizeof(p));
