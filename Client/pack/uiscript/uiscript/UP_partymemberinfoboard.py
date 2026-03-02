@@ -8,8 +8,8 @@ window = {
 	"x" : 0,
 	"y" : 0,
 
-	"width" : 106+30,
-	"height" : 36,
+	"width" : 156,
+	"height" : 50,
 
 	"children" :
 	(
@@ -18,8 +18,8 @@ window = {
 			"name" : "StateButton",
 			"type" : "button",
 
-			"x" : 0,
-			"y" : 0,
+			"x" : 106+30,
+			"y" : 0+6,
 
 			"default_image" : "d:/ymir work/ui/game/windows/party_state_normal_01.sub",
 			"over_image" : "d:/ymir work/ui/game/windows/party_state_normal_02.sub",
@@ -31,14 +31,23 @@ window = {
 			"type" : "bar",
 			"style" : ("not_pick",),
 
-			"x" : 22,
-			"y" : 0,
+			"x" : 52,
+			"y" : 0+7,
 			"width" : 84,
 			"height" : 17,
 			"color" : 0x99000000,
 
 			"children" :
 			(
+				{
+					"name" : "LevelPrint",
+					"type" : "text",
+
+					"x" : 3,
+					"y" : 2,
+
+					"text" : "0",
+				},
 				{
 					"name" : "NamePrint",
 					"type" : "text",
@@ -50,15 +59,15 @@ window = {
 				},
 			),
 		},
-		{ "name" : "Face_Image", "type" : "image", "x" : 106+4, "y" : 0+4, "image" : "d:/ymir work/ui/game/windows/face_warrior.sub" },
-		{ "name" : "Face_Slot", "type" : "image", "x" : 106, "y" : 0, "image" : "d:/ymir work/ui/game/windows/box_face.sub" },
+		{ "name" : "Face_Image", "type" : "image", "x" : 0+4, "y" : 0+4, "image" : "d:/ymir work/ui/game/windows/face_warrior.sub" },
+		{ "name" : "Face_Slot", "type" : "image", "x" : 0, "y" : 0, "image" : "d:/ymir work/ui/game/windows/box_face.sub" },
 		{
 			"name" : "Gauge",
 			"type" : "gauge",
 			"style" : ("not_pick",),
 
-			"x" : 22,
-			"y" : 17,
+			"x" : 52,
+			"y" : 17+7,
 			"width" : 84,
 			"color" : "red",
 		},
@@ -67,8 +76,8 @@ window = {
 			"type" : "gauge",
 			"style" : ("not_pick",),
 
-			"x" : 22,
-			"y" : 32,
+			"x" : 52,
+			"y" : 26+7,
 			"width" : 84,
 			"color" : "yellow",
 		},
@@ -76,8 +85,8 @@ window = {
 			"name" : "ExperienceImage",
 			"type" : "image",
 
-			"x" : 22,
-			"y" : 24,
+			"x" : 0,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_experience.sub",
 		},
@@ -85,8 +94,8 @@ window = {
 			"name" : "AttackerImage",
 			"type" : "image",
 
-			"x" : 34,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_attackgrade.sub",
 		},
@@ -94,8 +103,8 @@ window = {
 			"name" : "DefenderImage",
 			"type" : "image",
 
-			"x" : 46,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_defencegrade.sub",
 		},
@@ -103,8 +112,8 @@ window = {
 			"name" : "BufferImage",
 			"type" : "image",
 
-			"x" : 34,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_attackgrade.sub",
 		},
@@ -112,8 +121,8 @@ window = {
 			"name" : "SkillMasterImage",
 			"type" : "image",
 
-			"x" : 46,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_attackgrade.sub",
 		},
@@ -121,8 +130,8 @@ window = {
 			"name" : "TimeBonusImage",
 			"type" : "image",
 
-			"x" : 58,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_timebonus.sub",
 		},
@@ -130,8 +139,8 @@ window = {
 			"name" : "RegenBonus",
 			"type" : "image",
 
-			"x" : 70,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_regenbonus.sub",
 		},
@@ -139,8 +148,8 @@ window = {
 			"name" : "IncreaseArea150",
 			"type" : "image",
 
-			"x" : 82,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_increasearea_150.sub",
 		},
@@ -148,8 +157,8 @@ window = {
 			"name" : "IncreaseArea200",
 			"type" : "image",
 
-			"x" : 94,
-			"y" : 24,
+			"x" : 38,
+			"y" : 38,
 
 			"image" : "d:/ymir work/ui/game/windows/party_affect_increasearea_200.sub",
 		},
