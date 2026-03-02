@@ -1393,7 +1393,7 @@ bool CHARACTER::RefineItem(LPITEM pkItem, LPITEM pkTarget)
 
 		bool bHasMetinStone = false;
 
-		for (int i = 0; i < ITEM_SOCKET_MAX_NUM; i++)
+		for (int i = 0; i < ITEM_METIN_SOCKET_MAX_NUM; i++)
 		{
 			long socket = pkTarget->GetSocket(i);
 			if (socket > 2 && socket != ITEM_BROKEN_METIN_VNUM)
@@ -1405,7 +1405,7 @@ bool CHARACTER::RefineItem(LPITEM pkItem, LPITEM pkTarget)
 
 		if (bHasMetinStone)
 		{
-			for (int i = 0; i < ITEM_SOCKET_MAX_NUM; ++i)
+			for (int i = 0; i < ITEM_METIN_SOCKET_MAX_NUM; ++i)
 			{
 				long socket = pkTarget->GetSocket(i);
 				if (socket > 2 && socket != ITEM_BROKEN_METIN_VNUM)
@@ -3506,10 +3506,10 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 
 									std::stack<long> socket;
 
-									for (int i = 0; i < ITEM_SOCKET_MAX_NUM; ++i)
+									for (int i = 0; i < ITEM_METIN_SOCKET_MAX_NUM; ++i)
 										socket.push(item2->GetSocket(i));
 
-									int idx = ITEM_SOCKET_MAX_NUM - 1;
+									int idx = ITEM_METIN_SOCKET_MAX_NUM - 1;
 
 									while (socket.size() > 0)
 									{
@@ -4518,13 +4518,13 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 								case USE_CLEAN_SOCKET:
 									{
 										int i;
-										for (i = 0; i < ITEM_SOCKET_MAX_NUM; ++i)
+										for (i = 0; i < ITEM_METIN_SOCKET_MAX_NUM; ++i)
 										{
 											if (item2->GetSocket(i) == ITEM_BROKEN_METIN_VNUM)
 												break;
 										}
 
-										if (i == ITEM_SOCKET_MAX_NUM)
+										if (i == ITEM_METIN_SOCKET_MAX_NUM)
 										{
 											ChatPacket(CHAT_TYPE_INFO, LC_TEXT("청소할 석이 박혀있지 않습니다."));
 											return false;
@@ -4532,13 +4532,13 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 
 										int j = 0;
 
-										for (i = 0; i < ITEM_SOCKET_MAX_NUM; ++i)
+										for (i = 0; i < ITEM_METIN_SOCKET_MAX_NUM; ++i)
 										{
 											if (item2->GetSocket(i) != ITEM_BROKEN_METIN_VNUM && item2->GetSocket(i) != 0)
 												item2->SetSocket(j++, item2->GetSocket(i));
 										}
 
-										for (; j < ITEM_SOCKET_MAX_NUM; ++j)
+										for (; j < ITEM_METIN_SOCKET_MAX_NUM; ++j)
 										{
 											if (item2->GetSocket(j) > 0)
 												item2->SetSocket(j, 1);
@@ -5024,7 +5024,7 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 
 				int i;
 
-				for (i = 0; i < ITEM_SOCKET_MAX_NUM; ++i)
+				for (i = 0; i < ITEM_METIN_SOCKET_MAX_NUM; ++i)
 				{
 					DWORD dwVnum;   
 
@@ -5065,7 +5065,7 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 					return false;
 				}
 
-				for (i = 0; i < ITEM_SOCKET_MAX_NUM; ++i)
+				for (i = 0; i < ITEM_METIN_SOCKET_MAX_NUM; ++i)
 					if (item2->GetSocket(i) >= 1 && item2->GetSocket(i) <= 2 && item2->GetSocket(i) >= item->GetValue(2))
 					{
 						// 석 확률
@@ -5085,7 +5085,7 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 						break;
 					}
 
-				if (i == ITEM_SOCKET_MAX_NUM)
+				if (i == ITEM_METIN_SOCKET_MAX_NUM)
 					ChatPacket(CHAT_TYPE_INFO, LC_TEXT("부착할 수 있는 슬롯이 없습니다."));
 			}
 			break;
