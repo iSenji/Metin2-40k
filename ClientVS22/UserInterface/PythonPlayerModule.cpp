@@ -24,7 +24,7 @@ enum
 	EMOTION_DANCE_3,
 	EMOTION_DANCE_4,
 	EMOTION_DANCE_5,
-	EMOTION_DANCE_6,		// Í∞ïÎÇ®Ïä§ÌÉÄÏùº
+	EMOTION_DANCE_6,		// ∞≠≥≤Ω∫≈∏¿œ
 	EMOTION_CONGRATULATION,
 	EMOTION_FORGIVE,
 	EMOTION_ANGRY,
@@ -57,7 +57,7 @@ public:
 	{
 		static TGradeUnit beltGradeByLevelTable[] = 
 		{
-			0,			// Î≤®Ìä∏+0
+			0,			// ∫ß∆Æ+0
 			1,			// +1
 			1,			// +2
 			2,			// +3
@@ -72,20 +72,20 @@ public:
 		return beltGradeByLevelTable[refineLevel];
 	}
 
-	// ÌòÑÏû¨ Î≤®Ìä∏ Î†àÎ≤®ÏùÑ Í∏∞Ï§ÄÏúºÎ°ú, Ïñ¥Îñ§ ÏÖÄÎì§ÏùÑ Ïù¥Ïö©Ìï† Ïàò ÏûàÎäîÏßÄ Î¶¨ÌÑ¥
+	// «ˆ¿Á ∫ß∆Æ ∑π∫ß¿ª ±‚¡ÿ¿∏∑Œ, æÓ∂≤ ºøµÈ¿ª ¿ÃøÎ«“ ºˆ ¿÷¥¬¡ˆ ∏Æ≈œ
 	static const TGradeUnit* GetAvailableRuleTableByGrade()
 	{
 		/**
-			Î≤®Ìä∏Îäî Ï¥ù +0 ~ +9 Î†àÎ≤®ÏùÑ Í∞ÄÏßà Ïàò ÏûàÏúºÎ©∞, Î†àÎ≤®Ïóê Îî∞Îùº 7Îã®Í≥Ñ Îì±Í∏âÏúºÎ°ú Íµ¨Î∂ÑÎêòÏñ¥ Ïù∏Î≤§ÌÜ†Î¶¨Í∞Ä ÌôúÏÑ± Ìôî ÎêúÎã§.
-			Î≤®Ìä∏ Î†àÎ≤®Ïóê Îî∞Î•∏ ÏÇ¨Ïö© Í∞ÄÎä•Ìïú ÏÖÄÏùÄ ÏïÑÎûò Í∑∏Î¶ºÍ≥º Í∞ôÏùå. ÌòÑÏû¨ Îì±Í∏â >= ÌôúÏÑ±Í∞ÄÎä• Îì±Í∏âÏù¥Î©¥ ÏÇ¨Ïö© Í∞ÄÎä•.
-			(Îã®, ÌòÑÏû¨ Î†àÎ≤®Ïù¥ 0Ïù¥Î©¥ Î¨¥Ï°∞Í±¥ ÏÇ¨Ïö© Î∂àÍ∞Ä, Í¥ÑÌò∏ ÏïàÏùò Ïà´ÏûêÎäî Îì±Í∏â)
+			∫ß∆Æ¥¬ √— +0 ~ +9 ∑π∫ß¿ª ∞°¡˙ ºˆ ¿÷¿∏∏Á, ∑π∫ßø° µ˚∂Û 7¥‹∞Ë µÓ±ﬁ¿∏∑Œ ±∏∫–µ«æÓ ¿Œ∫•≈‰∏Æ∞° »∞º∫ »≠ µ»¥Ÿ.
+			∫ß∆Æ ∑π∫ßø° µ˚∏• ªÁøÎ ∞°¥…«— ºø¿∫ æ∆∑° ±◊∏≤∞˙ ∞∞¿Ω. «ˆ¿Á µÓ±ﬁ >= »∞º∫∞°¥… µÓ±ﬁ¿Ã∏È ªÁøÎ ∞°¥….
+			(¥‹, «ˆ¿Á ∑π∫ß¿Ã 0¿Ã∏È π´¡∂∞« ªÁøÎ ∫“∞°, ∞˝»£ æ»¿« º˝¿⁄¥¬ µÓ±ﬁ)
 			
 				2(1)  4(2)  6(4)  8(6)
 				5(3)  5(3)  6(4)  8(6)
 				7(5)  7(5)  7(5)  8(6)
 				9(7)  9(7)  9(7)  9(7)
 
-			Î≤®Ìä∏ Ïù∏Î≤§ÌÜ†Î¶¨Ïùò ÌÅ¨Í∏∞Îäî 4x4 (16Ïπ∏)
+			∫ß∆Æ ¿Œ∫•≈‰∏Æ¿« ≈©±‚¥¬ 4x4 (16ƒ≠)
 		*/
 
 		static TGradeUnit availableRuleByGrade[c_Belt_Inventory_Slot_Count] = {
@@ -100,7 +100,7 @@ public:
 
 	static bool IsAvailableCell(WORD cell, int beltGrade /*int beltLevel*/)
 	{
-		// Í∏∞Ìöç Îòê Î∞îÎÄú.. ÏïÑÎÜî...
+		// ±‚»π ∂« πŸ≤Ò.. æ∆≥ˆ...
 		//const TGradeUnit beltGrade = GetBeltGradeByRefineLevel(beltLevel);		
 		const TGradeUnit* ruleTable = GetAvailableRuleTableByGrade();
 
@@ -1057,13 +1057,13 @@ PyObject * playerGetItemLink(PyObject * poSelf, PyObject * poArgs)
 
 		if( GetDefaultCodePage() == CP_ARABIC ) {
 			if (isAttr)
-				//"item:Î≤àÌò∏:ÌîåÎûòÍ∑∏:ÏÜåÏºì0:ÏÜåÏºì1:ÏÜåÏºì2"
+				//"item:π¯»£:«√∑°±◊:º“ƒœ0:º“ƒœ1:º“ƒœ2"
 				snprintf(buf, sizeof(buf), " |h|r[%s]|cffffc700|H%s|h", pItemData->GetName(), itemlink);
 			else
 				snprintf(buf, sizeof(buf), " |h|r[%s]|cfff1e6c0|H%s|h", pItemData->GetName(), itemlink);
 		} else {
 			if (isAttr)
-				//"item:Î≤àÌò∏:ÌîåÎûòÍ∑∏:ÏÜåÏºì0:ÏÜåÏºì1:ÏÜåÏºì2"
+				//"item:π¯»£:«√∑°±◊:º“ƒœ0:º“ƒœ1:º“ƒœ2"
 				snprintf(buf, sizeof(buf), "|cffffc700|H%s|h[%s]|h|r", itemlink, pItemData->GetName());
 			else
 				snprintf(buf, sizeof(buf), "|cfff1e6c0|H%s|h[%s]|h|r", itemlink, pItemData->GetName());
@@ -2089,7 +2089,7 @@ PyObject * playerSlotTypeToInvenType(PyObject* poSelf, PyObject* poArgs)
 
 
 #ifdef ENABLE_NEW_EQUIPMENT_SYSTEM
-// ÌîåÎ†àÏù¥Ïñ¥Í∞Ä Î≤®Ìä∏Î•º Ï∞©Ïö© Ï§ëÏù∏ÏßÄ?
+// «√∑π¿ÃæÓ∞° ∫ß∆Æ∏¶ ¬¯øÎ ¡ﬂ¿Œ¡ˆ?
 PyObject * playerIsEquippingBelt(PyObject* poSelf, PyObject* poArgs)
 {
 	const CPythonPlayer* player = CPythonPlayer::InstancePtr();
@@ -2104,7 +2104,7 @@ PyObject * playerIsEquippingBelt(PyObject* poSelf, PyObject* poArgs)
 	
 }
 
-// Í≤ÄÏÇ¨ÌïòÎ†§Îäî Î≤®Ìä∏ Ïù∏Î≤§ÌÜ†Î¶¨ CellÏù¥ ÏÇ¨Ïö© Í∞ÄÎä•Ìïú Ïπ∏Ïù∏ÏßÄ? (ÏÇ¨Ïö©Í∞ÄÎä• Ïó¨Î∂ÄÎäî Ï∞©Ïö© Ï§ëÏù∏ Î≤®Ìä∏Ïùò Í∞ïÌôî Ï†ïÎèÑÏóê Îî∞Îùº Îã¨ÎùºÏßê)
+// ∞ÀªÁ«œ∑¡¥¬ ∫ß∆Æ ¿Œ∫•≈‰∏Æ Cell¿Ã ªÁøÎ ∞°¥…«— ƒ≠¿Œ¡ˆ? (ªÁøÎ∞°¥… ø©∫Œ¥¬ ¬¯øÎ ¡ﬂ¿Œ ∫ß∆Æ¿« ∞≠»≠ ¡§µµø° µ˚∂Û ¥ﬁ∂Û¡¸)
 PyObject * playerIsAvailableBeltInventoryCell(PyObject* poSelf, PyObject* poArgs)
 {
 	const CPythonPlayer* player = CPythonPlayer::InstancePtr();
@@ -2128,7 +2128,7 @@ PyObject * playerIsAvailableBeltInventoryCell(PyObject* poSelf, PyObject* poArgs
 #endif
 
 
-// Ïö©ÌòºÏÑù Í∞ïÌôî
+// øÎ»•ºÆ ∞≠»≠
 PyObject* playerSendDragonSoulRefine(PyObject* poSelf, PyObject* poArgs)
 {
 	BYTE bSubHeader;
@@ -2658,7 +2658,7 @@ void initPlayer()
 	PyModule_AddIntConstant(poModule, "EMOTION_DANCE_3",		EMOTION_DANCE_3);
 	PyModule_AddIntConstant(poModule, "EMOTION_DANCE_4",		EMOTION_DANCE_4);
 	PyModule_AddIntConstant(poModule, "EMOTION_DANCE_5",		EMOTION_DANCE_5);
-	PyModule_AddIntConstant(poModule, "EMOTION_DANCE_6",		EMOTION_DANCE_6);				// PSY Í∞ïÎÇ®Ïä§ÌÉÄÏùº
+	PyModule_AddIntConstant(poModule, "EMOTION_DANCE_6",		EMOTION_DANCE_6);				// PSY ∞≠≥≤Ω∫≈∏¿œ
 	PyModule_AddIntConstant(poModule, "EMOTION_CONGRATULATION",	EMOTION_CONGRATULATION);
 	PyModule_AddIntConstant(poModule, "EMOTION_FORGIVE",		EMOTION_FORGIVE);
 	PyModule_AddIntConstant(poModule, "EMOTION_ANGRY",			EMOTION_ANGRY);
@@ -2673,11 +2673,11 @@ void initPlayer()
 	PyModule_AddIntConstant(poModule, "EMOTION_FRENCH_KISS",	EMOTION_FRENCH_KISS);
 	PyModule_AddIntConstant(poModule, "EMOTION_SLAP",			EMOTION_SLAP);
 
-	//// ÏûêÎèôÎ¨ºÏïΩ ÌÉÄÏûÖ
+	//// ¿⁄µøπ∞æ‡ ≈∏¿‘
 	PyModule_AddIntConstant(poModule, "AUTO_POTION_TYPE_HP",	CPythonPlayer::AUTO_POTION_TYPE_HP);
 	PyModule_AddIntConstant(poModule, "AUTO_POTION_TYPE_SP",	CPythonPlayer::AUTO_POTION_TYPE_SP);
 
-	// Ïö©ÌòºÏÑù
+	// øÎ»•ºÆ
 	PyModule_AddIntConstant(poModule, "DRAGON_SOUL_PAGE_SIZE",	c_DragonSoul_Inventory_Box_Size);
 	PyModule_AddIntConstant(poModule, "DRAGON_SOUL_PAGE_COUNT",	DRAGON_SOUL_GRADE_MAX);
 	PyModule_AddIntConstant(poModule, "DRAGON_SOUL_SLOT_COUNT",	c_DragonSoul_Inventory_Count);
@@ -2685,7 +2685,7 @@ void initPlayer()
 	PyModule_AddIntConstant(poModule, "DRAGON_SOUL_EQUIPMENT_PAGE_COUNT",	DS_DECK_MAX_NUM);
 	PyModule_AddIntConstant(poModule, "DRAGON_SOUL_EQUIPMENT_FIRST_SIZE",	c_DragonSoul_Equip_Slot_Max);
 
-	// Ïö©ÌòºÏÑù Í∞úÎüâÏ∞Ω
+	// øÎ»•ºÆ ∞≥∑Æ√¢
 	PyModule_AddIntConstant(poModule, "DRAGON_SOUL_REFINE_CLOSE",	DS_SUB_HEADER_CLOSE);
 	PyModule_AddIntConstant(poModule, "DS_SUB_HEADER_DO_UPGRADE",	DS_SUB_HEADER_DO_UPGRADE);
 	PyModule_AddIntConstant(poModule, "DS_SUB_HEADER_DO_IMPROVEMENT",	DS_SUB_HEADER_DO_IMPROVEMENT);
@@ -2770,15 +2770,6 @@ void initPlayer()
 	PyModule_AddIntConstant(poModule, "KEY_ADDKEYBUFFERCONTROL", KEY_ADDKEYBUFFERCONTROL);
 	PyModule_AddIntConstant(poModule, "KEY_ADDKEYBUFFERALT", KEY_ADDKEYBUFFERALT);
 	PyModule_AddIntConstant(poModule, "KEY_ADDKEYBUFFERSHIFT", KEY_ADDKEYBUFFERSHIFT);
-#endif
-#ifdef ENABLE_FISHING_TIMER
-	PyModule_AddIntConstant(poModule, "FISHING_TIMER_SUBHEADER_GC_RESET", FISHING_TIMER_SUBHEADER_GC_RESET);
-	PyModule_AddIntConstant(poModule, "FISHING_TIMER_SUBHEADER_GC_WAITING", FISHING_TIMER_SUBHEADER_GC_WAITING);
-	PyModule_AddIntConstant(poModule, "FISHING_TIMER_SUBHEADER_GC_GET", FISHING_TIMER_SUBHEADER_GC_GET);
-#endif
-#ifdef ENABLE_MINING_TIMER
-	PyModule_AddIntConstant(poModule, "MINING_TIMER_SUBHEADER_GC_RESET", MINING_TIMER_SUBHEADER_GC_RESET);
-	PyModule_AddIntConstant(poModule, "MINING_TIMER_SUBHEADER_GC_WAITING", MINING_TIMER_SUBHEADER_GC_WAITING);
 #endif
 
 }

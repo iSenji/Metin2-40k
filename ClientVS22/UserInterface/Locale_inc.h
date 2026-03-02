@@ -1,4 +1,4 @@
-#define LOCALE_SERVICE_SINGAPORE			// Â½ÃŒÂ°Â¡Ã†Ãº
+#define LOCALE_SERVICE_SINGAPORE			// ½Ì°¡Æú
 #define ENABLE_COSTUME_SYSTEM
 #define ENABLE_ENERGY_SYSTEM
 #define ENABLE_DRAGON_SOUL_SYSTEM
@@ -13,7 +13,7 @@
 #define BLOCK_D_YMIR
 
 #define FIX_01
-//#define BOSS_SYSTEM_FALLBACK
+#define BOSS_SYSTEM_FALLBACK
 
 #define ENABLE_KEYCHANGE_SYSTEM
 #define EMOJI_TEXTLINE
@@ -24,10 +24,7 @@
 #define ENABLE_CPP_PSM																// fast loading
 #define ENABLE_COSTUME_MOUNT
 #define ENABLE_COSTUME_PET
+
+#define ENABLE_RARITY_SYSTEM
 #define ENABLE_PARTY_UPDATE
-#define ENABLE_FISHING_TIMER
-#define ENABLE_MINING_TIMER
-
-
-//#define ENABLE_RARITY_SYSTEM
 

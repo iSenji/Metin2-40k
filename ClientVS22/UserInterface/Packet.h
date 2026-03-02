@@ -4,18 +4,18 @@
 #include "Hackshield.h"
 #include METIN2HS_INCLUDE_ANTICPXSVR
 #else
-#pragma pack(push) //ê¸°ì¡´ alignment ì €ì¥
+#pragma pack(push) //±âÁ¸ alignment ÀúÀå
 #pragma pack(8)
 
 #define ANTICPX_TRANS_BUFFER_MAX			400
 
 typedef struct _AHNHS_TRANS_BUFFER
 {
-	unsigned char byBuffer[ANTICPX_TRANS_BUFFER_MAX/* ì†¡ìˆ˜ì‹  íŒ¨í‚·ì˜ ìµœëŒ€ í¬ê¸° */];
+	unsigned char byBuffer[ANTICPX_TRANS_BUFFER_MAX/* ¼Û¼ö½Å ÆĞÅ¶ÀÇ ÃÖ´ë Å©±â */];
 	unsigned short nLength;
 } AHNHS_TRANS_BUFFER, *PAHNHS_TRANS_BUFFER;
 
-#pragma pack(pop) // ê¸°ì¡´ alignment ë³µêµ¬.
+#pragma pack(pop) // ±âÁ¸ alignment º¹±¸.
 #endif /* !USE_AHNLAB_HACKSHIELD */
 
 #include "../gamelib/RaceData.h"
@@ -30,8 +30,8 @@ enum
 	HEADER_CG_LOGIN								= 1,
 	HEADER_CG_ATTACK							= 2,
 	HEADER_CG_CHAT								= 3,
-	HEADER_CG_PLAYER_CREATE						= 4,		// ìƒˆë¡œìš´ í”Œë˜ì´ì–´ë¥¼ ìƒì„±
-	HEADER_CG_PLAYER_DESTROY					= 5,		// í”Œë˜ì´ì–´ë¥¼ ì‚­ì œ.
+	HEADER_CG_PLAYER_CREATE						= 4,		// »õ·Î¿î ÇÃ·¡ÀÌ¾î¸¦ »ı¼º
+	HEADER_CG_PLAYER_DESTROY					= 5,		// ÇÃ·¡ÀÌ¾î¸¦ »èÁ¦.
 	HEADER_CG_PLAYER_SELECT						= 6,
 	HEADER_CG_CHARACTER_MOVE					= 7,
 	HEADER_CG_SYNC_POSITION  					= 8,
@@ -95,8 +95,8 @@ enum
     HEADER_CG_MESSENGER                         = 67,
 	//HEADER_BLANK68								= 68,
     HEADER_CG_MALL_CHECKOUT                     = 69,
-    HEADER_CG_SAFEBOX_CHECKIN                   = 70,   // ì•„ì´í…œì„ ì°½ê³ ì— ë„£ëŠ”ë‹¤.
-    HEADER_CG_SAFEBOX_CHECKOUT                  = 71,   // ì•„ì´í…œì„ ì°½ê³ ë¡œ ë¶€í„° ë¹¼ì˜¨ë‹¤.
+    HEADER_CG_SAFEBOX_CHECKIN                   = 70,   // ¾ÆÀÌÅÛÀ» Ã¢°í¿¡ ³Ö´Â´Ù.
+    HEADER_CG_SAFEBOX_CHECKOUT                  = 71,   // ¾ÆÀÌÅÛÀ» Ã¢°í·Î ºÎÅÍ »©¿Â´Ù.
     HEADER_CG_PARTY_INVITE                      = 72,
     HEADER_CG_PARTY_INVITE_ANSWER               = 73,
     HEADER_CG_PARTY_REMOVE                      = 74,
@@ -144,7 +144,7 @@ enum
 	HEADER_CG_GUILD_SYMBOL_CRC					= 113,
 	HEADER_CG_SCRIPT_SELECT_ITEM				= 114,
 	HEADER_CG_LOGIN4							= 115,
-	HEADER_CG_LOGIN5_OPENID						= 116,	//OpenID : ì‹¤í–‰ì‹œ ë°›ì€ ì¸ì¦í‚¤ë¥¼ ì„œë²„ì— ë³´ëƒ„.
+	HEADER_CG_LOGIN5_OPENID						= 116,	//OpenID : ½ÇÇà½Ã ¹ŞÀº ÀÎÁõÅ°¸¦ ¼­¹ö¿¡ º¸³¿.
 
 	HEADER_CG_RUNUP_MATRIX_ANSWER               = 201,
 	HEADER_CG_NEWCIBN_PASSPOD_ANSWER			= 202,
@@ -189,17 +189,17 @@ enum
 	HEADER_GC_CHANGE_SPEED						= 18,
 	HEADER_GC_CHARACTER_UPDATE                  = 19,
 #if defined(GAIDEN)
-	HEADER_GC_ITEM_DEL							= 20, // ì•„ì´í…œ ì°½ì— ì¶”ê°€
-	HEADER_GC_ITEM_SET							= 21, // ì•„ì´í…œ ì°½ì— ì¶”ê°€
+	HEADER_GC_ITEM_DEL							= 20, // ¾ÆÀÌÅÛ Ã¢¿¡ Ãß°¡
+	HEADER_GC_ITEM_SET							= 21, // ¾ÆÀÌÅÛ Ã¢¿¡ Ãß°¡
 #else
-	HEADER_GC_ITEM_SET							= 20, // ì•„ì´í…œ ì°½ì— ì¶”ê°€
-	HEADER_GC_ITEM_SET2							= 21, // ì•„ì´í…œ ì°½ì— ì¶”ê°€
+	HEADER_GC_ITEM_SET							= 20, // ¾ÆÀÌÅÛ Ã¢¿¡ Ãß°¡
+	HEADER_GC_ITEM_SET2							= 21, // ¾ÆÀÌÅÛ Ã¢¿¡ Ãß°¡
 #endif
-	HEADER_GC_ITEM_USE							= 22, // ì•„ì´í…œ ì‚¬ìš© (ì£¼ìœ„ ì‚¬ëŒë“¤ì—ê²Œ ë³´ì—¬ì£¼ê¸° ìœ„í•´)
-	HEADER_GC_ITEM_DROP							= 23, // ì•„ì´í…œ ë²„ë¦¬ê¸°
-	HEADER_GC_ITEM_UPDATE						= 25, // ì•„ì´í…œ ìˆ˜ì¹˜ ì—…ë°ì´íŠ¸
-	HEADER_GC_ITEM_GROUND_ADD					= 26, // ë°”ë‹¥ì— ì•„ì´í…œ ì¶”ê°€
-	HEADER_GC_ITEM_GROUND_DEL					= 27, // ë°”ë‹¥ì—ì„œ ì•„ì´í…œ ì‚­ì œ
+	HEADER_GC_ITEM_USE							= 22, // ¾ÆÀÌÅÛ »ç¿ë (ÁÖÀ§ »ç¶÷µé¿¡°Ô º¸¿©ÁÖ±â À§ÇØ)
+	HEADER_GC_ITEM_DROP							= 23, // ¾ÆÀÌÅÛ ¹ö¸®±â
+	HEADER_GC_ITEM_UPDATE						= 25, // ¾ÆÀÌÅÛ ¼öÄ¡ ¾÷µ¥ÀÌÆ®
+	HEADER_GC_ITEM_GROUND_ADD					= 26, // ¹Ù´Ú¿¡ ¾ÆÀÌÅÛ Ãß°¡
+	HEADER_GC_ITEM_GROUND_DEL					= 27, // ¹Ù´Ú¿¡¼­ ¾ÆÀÌÅÛ »èÁ¦
     HEADER_GC_QUICKSLOT_ADD                     = 28,
     HEADER_GC_QUICKSLOT_DEL                     = 29,
     HEADER_GC_QUICKSLOT_SWAP                    = 30,
@@ -334,13 +334,6 @@ enum
 
 	HEADER_GC_AUTH_SUCCESS_OPENID				= 154,
 
-#ifdef ENABLE_FISHING_TIMER
-	HEADER_GC_FISHING_TIMER						= 156,
-#endif
-#ifdef ENABLE_MINING_TIMER
-	HEADER_GC_MINING_TIMER						= 157,
-#endif
-
 	HEADER_GC_RUNUP_MATRIX_QUIZ                 = 201,
 	HEADER_GC_NEWCIBN_PASSPOD_REQUEST			= 202,
 	HEADER_GC_NEWCIBN_PASSPOD_FAILURE			= 203,
@@ -396,13 +389,13 @@ enum
 	PLAYER_PER_ACCOUNT3 = 3,
 	PLAYER_PER_ACCOUNT4 = 4,
 
-	PLAYER_ITEM_SLOT_MAX_NUM = 20,		// í”Œë˜ì´ì–´ì˜ ìŠ¬ë¡¯ë‹¹ ë“¤ì–´ê°€ëŠ” ê°¯ìˆ˜.
+	PLAYER_ITEM_SLOT_MAX_NUM = 20,		// ÇÃ·¡ÀÌ¾îÀÇ ½½·Ô´ç µé¾î°¡´Â °¹¼ö.
 
 	QUICKSLOT_MAX_LINE = 4,
-	QUICKSLOT_MAX_COUNT_PER_LINE = 8, // í´ë¼ì´ì–¸íŠ¸ ì„ì˜ ê²°ì •ê°’
+	QUICKSLOT_MAX_COUNT_PER_LINE = 8, // Å¬¶óÀÌ¾ğÆ® ÀÓÀÇ °áÁ¤°ª
 	QUICKSLOT_MAX_COUNT = QUICKSLOT_MAX_LINE * QUICKSLOT_MAX_COUNT_PER_LINE,
 
-	QUICKSLOT_MAX_NUM = 36, // ì„œë²„ì™€ ë§ì¶°ì ¸ ìˆëŠ” ê°’
+	QUICKSLOT_MAX_NUM = 36, // ¼­¹ö¿Í ¸ÂÃçÁ® ÀÖ´Â °ª
 
 	SHOP_HOST_ITEM_MAX_NUM = 40,
 
@@ -475,7 +468,7 @@ typedef struct packet_mark_idxlist
     BYTE    header;
 	DWORD	bufSize;
     WORD    count;
-    //ë’¤ì— size * (WORD + WORD)ë§Œí¼ ë°ì´í„° ë¶™ìŒ
+    //µÚ¿¡ size * (WORD + WORD)¸¸Å­ µ¥ÀÌÅÍ ºÙÀ½
 } TPacketGCMarkIDXList;
 
 typedef struct packet_mark_block
@@ -484,7 +477,7 @@ typedef struct packet_mark_block
     DWORD   bufSize;
 	BYTE	imgIdx;
     DWORD   count;
-    // ë’¤ì— 64 x 48 x í”½ì…€í¬ê¸°(4ë°”ì´íŠ¸) = 12288ë§Œí¼ ë°ì´í„° ë¶™ìŒ
+    // µÚ¿¡ 64 x 48 x ÇÈ¼¿Å©±â(4¹ÙÀÌÆ®) = 12288¸¸Å­ µ¥ÀÌÅÍ ºÙÀ½
 } TPacketGCMarkBlock;
 
 typedef struct command_symbol_upload
@@ -553,7 +546,7 @@ typedef struct command_login
     char pwd[PASS_MAX_NUM + 1];
 } TPacketCGLogin;
 
-// start - ê¶Œí•œ ì„œë²„ ì ‘ì†ì„ ìœ„í•œ íŒ¨í‚·ë“¤
+// start - ±ÇÇÑ ¼­¹ö Á¢¼ÓÀ» À§ÇÑ ÆĞÅ¶µé
 typedef struct command_login2
 {
 	BYTE	header;
@@ -576,7 +569,7 @@ typedef struct command_login5
     char	authKey[OPENID_AUTHKEY_LEN + 1];
     DWORD	adwClientKey[4];
 } TPacketCGLogin5;
-// end - ê¶Œí•œ ì„œë²„ ì ‘ì†ì„ ìœ„í•œ íŒ¨í‚·ë“¤
+// end - ±ÇÇÑ ¼­¹ö Á¢¼ÓÀ» À§ÇÑ ÆĞÅ¶µé
 
 typedef struct command_direct_enter
 {
@@ -595,8 +588,8 @@ typedef struct command_player_select
 typedef struct command_attack
 {
 	BYTE	header;
-	BYTE	bType;			// ê³µê²© ìœ í˜•
-	DWORD	dwVictimVID;	// ì  VID
+	BYTE	bType;			// °ø°İ À¯Çü
+	DWORD	dwVictimVID;	// Àû VID
 	BYTE	bCRCMagicCubeProcPiece;
 	BYTE	bCRCMagicCubeFilePiece;
 } TPacketCGAttack;
@@ -1026,9 +1019,9 @@ typedef struct SShopItemTable
     DWORD		vnum;
     WORD		count;
 
-    TItemPos	pos;			// PC ìƒì ì—ë§Œ ì´ìš©
-    DWORD		price;			// PC ìƒì ì—ë§Œ ì´ìš©
-    BYTE		display_pos;	//	PC ìƒì ì—ë§Œ ì´ìš©, ë³´ì¼ ìœ„ì¹˜.
+    TItemPos	pos;			// PC »óÁ¡¿¡¸¸ ÀÌ¿ë
+    DWORD		price;			// PC »óÁ¡¿¡¸¸ ÀÌ¿ë
+    BYTE		display_pos;	//	PC »óÁ¡¿¡¸¸ ÀÌ¿ë, º¸ÀÏ À§Ä¡.
 } TShopItemTable;
 
 typedef struct SPacketCGMyShop
@@ -1128,18 +1121,18 @@ typedef struct command_script_select_item
 // From Server
 enum EPhase
 {
-    PHASE_CLOSE,				// ëŠê¸°ëŠ” ìƒíƒœ (ë˜ëŠ” ëŠê¸° ì „ ìƒíƒœ)
-    PHASE_HANDSHAKE,			// ì•…ìˆ˜..;;
-    PHASE_LOGIN,				// ë¡œê·¸ì¸ ì¤‘
-    PHASE_SELECT,				// ìºë¦­í„° ì„ íƒ í™”ë©´
-    PHASE_LOADING,				// ì„ íƒ í›„ ë¡œë”© í™”ë©´
-    PHASE_GAME,					// ê²Œì„ í™”ë©´
-    PHASE_DEAD,					// ì£½ì—ˆì„ ë•Œ.. (ê²Œì„ ì•ˆì— ìˆëŠ” ê²ƒì¼ ìˆ˜ë„..)
+    PHASE_CLOSE,				// ²÷±â´Â »óÅÂ (¶Ç´Â ²÷±â Àü »óÅÂ)
+    PHASE_HANDSHAKE,			// ¾Ç¼ö..;;
+    PHASE_LOGIN,				// ·Î±×ÀÎ Áß
+    PHASE_SELECT,				// Ä³¸¯ÅÍ ¼±ÅÃ È­¸é
+    PHASE_LOADING,				// ¼±ÅÃ ÈÄ ·Îµù È­¸é
+    PHASE_GAME,					// °ÔÀÓ È­¸é
+    PHASE_DEAD,					// Á×¾úÀ» ¶§.. (°ÔÀÓ ¾È¿¡ ÀÖ´Â °ÍÀÏ ¼öµµ..)
 
-	PHASE_DBCLIENT_CONNECTING,	// ì„œë²„ìš©
-    PHASE_DBCLIENT,				// ì„œë²„ìš©
-    PHASE_P2P,					// ì„œë²„ìš©
-    PHASE_AUTH,					// ë¡œê·¸ì¸ ì¸ì¦ ìš©
+	PHASE_DBCLIENT_CONNECTING,	// ¼­¹ö¿ë
+    PHASE_DBCLIENT,				// ¼­¹ö¿ë
+    PHASE_P2P,					// ¼­¹ö¿ë
+    PHASE_AUTH,					// ·Î±×ÀÎ ÀÎÁõ ¿ë
 };
 
 typedef struct packet_phase
@@ -1148,7 +1141,7 @@ typedef struct packet_phase
     BYTE        phase;
 } TPacketGCPhase;
 
-typedef struct packet_blank		// ê³µë°±íŒ¨í‚·.
+typedef struct packet_blank		// °ø¹éÆĞÅ¶.
 {
 	BYTE		header;
 } TPacketGCBlank;
@@ -1285,7 +1278,7 @@ enum EPKModes
 	PK_MODE_MAX_NUM,
 };
 
-// 2004.11.20.myevan.CRaceData::PART_MAX_NUM ì‚¬ìš©ì•ˆí•˜ê²Œ ìˆ˜ì • - ì„œë²„ì—ì„œ ì‚¬ìš©í•˜ëŠ”ê²ƒê³¼ ì¼ì¹˜í•˜ì§€ ì•ŠìŒ
+// 2004.11.20.myevan.CRaceData::PART_MAX_NUM »ç¿ë¾ÈÇÏ°Ô ¼öÁ¤ - ¼­¹ö¿¡¼­ »ç¿ëÇÏ´Â°Í°ú ÀÏÄ¡ÇÏÁö ¾ÊÀ½
 enum ECharacterEquipmentPart
 {
 	CHR_EQUIPPART_ARMOR,
@@ -1305,7 +1298,7 @@ typedef struct packet_char_additional_info
 	BYTE	bEmpire;
 	DWORD   dwGuildID;
 	DWORD   dwLevel;
-	short   sAlignment; //ì„ ì•…ì¹˜
+	short   sAlignment; //¼±¾ÇÄ¡
 	BYTE    bPKMode;
 	DWORD   dwMountVnum;
 } TPacketGCCharacterAdditionalInfo;
@@ -1417,14 +1410,14 @@ typedef struct packet_GlobalTime
 
 enum EChatType
 {
-	CHAT_TYPE_TALKING,  /* ê·¸ëƒ¥ ì±„íŒ… */
-	CHAT_TYPE_INFO,     /* ì •ë³´ (ì•„ì´í…œì„ ì§‘ì—ˆë‹¤, ê²½í—˜ì¹˜ë¥¼ ì–»ì—ˆë‹¤. ë“±) */
-	CHAT_TYPE_NOTICE,   /* ê³µì§€ì‚¬í•­ */
-	CHAT_TYPE_PARTY,    /* íŒŒí‹°ë§ */
-	CHAT_TYPE_GUILD,    /* ê¸¸ë“œë§ */
-	CHAT_TYPE_COMMAND,	/* ëª…ë ¹ */
-	CHAT_TYPE_SHOUT,	/* ì™¸ì¹˜ê¸° */
-	CHAT_TYPE_WHISPER,	// ì„œë²„ì™€ëŠ” ì—°ë™ë˜ì§€ ì•ŠëŠ” Only Client Enum
+	CHAT_TYPE_TALKING,  /* ±×³É Ã¤ÆÃ */
+	CHAT_TYPE_INFO,     /* Á¤º¸ (¾ÆÀÌÅÛÀ» Áı¾ú´Ù, °æÇèÄ¡¸¦ ¾ò¾ú´Ù. µî) */
+	CHAT_TYPE_NOTICE,   /* °øÁö»çÇ× */
+	CHAT_TYPE_PARTY,    /* ÆÄÆ¼¸» */
+	CHAT_TYPE_GUILD,    /* ±æµå¸» */
+	CHAT_TYPE_COMMAND,	/* ¸í·É */
+	CHAT_TYPE_SHOUT,	/* ¿ÜÄ¡±â */
+	CHAT_TYPE_WHISPER,	// ¼­¹ö¿Í´Â ¿¬µ¿µÇÁö ¾Ê´Â Only Client Enum
 	CHAT_TYPE_BIG_NOTICE,
 	CHAT_TYPE_MAX_NUM,
 };
@@ -1438,7 +1431,7 @@ typedef struct packet_chatting
 	BYTE	bEmpire;
 } TPacketGCChat;
 
-typedef struct packet_whisper   // ê°€ë³€ íŒ¨í‚·    
+typedef struct packet_whisper   // °¡º¯ ÆĞÅ¶    
 {   
     BYTE        bHeader;                        
     WORD        wSize;
@@ -1525,57 +1518,57 @@ enum EPointTypes
     POINT_MAX_HP,               // 6
     POINT_SP,                   // 7
     POINT_MAX_SP,               // 8  
-    POINT_STAMINA,              // 9  ìŠ¤í…Œë¯¸ë„ˆ
-    POINT_MAX_STAMINA,          // 10 ìµœëŒ€ ìŠ¤í…Œë¯¸ë„ˆ
+    POINT_STAMINA,              // 9  ½ºÅ×¹Ì³Ê
+    POINT_MAX_STAMINA,          // 10 ÃÖ´ë ½ºÅ×¹Ì³Ê
     
     POINT_GOLD,                 // 11
-    POINT_ST,                   // 12 ê·¼ë ¥
-    POINT_HT,                   // 13 ì²´ë ¥
-    POINT_DX,                   // 14 ë¯¼ì²©ì„±
-    POINT_IQ,                   // 15 ì •ì‹ ë ¥
-    POINT_ATT_POWER,            // 16 ê³µê²©ë ¥
-    POINT_ATT_SPEED,            // 17 ê³µê²©ì†ë„
-    POINT_EVADE_RATE,           // 18 íšŒí”¼ìœ¨
-    POINT_MOV_SPEED,            // 19 ì´ë™ì†ë„
-    POINT_DEF_GRADE,            // 20 ë°©ì–´ë“±ê¸‰
-	POINT_CASTING_SPEED,        // 21 ì£¼ë¬¸ì†ë„ (ì¿¨ë‹¤ìš´íƒ€ì„*100) / (100 + ì´ê°’) = ìµœì¢… ì¿¨ë‹¤ìš´ íƒ€ì„
-	POINT_MAGIC_ATT_GRADE,      // 22 ë§ˆë²•ê³µê²©ë ¥
-    POINT_MAGIC_DEF_GRADE,      // 23 ë§ˆë²•ë°©ì–´ë ¥
-    POINT_EMPIRE_POINT,         // 24 ì œêµ­ì ìˆ˜
-    POINT_LEVEL_STEP,           // 25 í•œ ë ˆë²¨ì—ì„œì˜ ë‹¨ê³„.. (1 2 3 ë  ë•Œ ë³´ìƒ, 4 ë˜ë©´ ë ˆë²¨ ì—…)
-    POINT_STAT,                 // 26 ëŠ¥ë ¥ì¹˜ ì˜¬ë¦´ ìˆ˜ ìˆëŠ” ê°œìˆ˜
-	POINT_SUB_SKILL,            // 27 ë³´ì¡° ìŠ¤í‚¬ í¬ì¸íŠ¸
-	POINT_SKILL,                // 28 ì•¡í‹°ë¸Œ ìŠ¤í‚¬ í¬ì¸íŠ¸
-//    POINT_SKILL_PASV,           // 27 íŒ¨ì‹œë¸Œ ê¸°ìˆ  ì˜¬ë¦´ ìˆ˜ ìˆëŠ” ê°œìˆ˜
-//    POINT_SKILL_ACTIVE,         // 28 ì•¡í‹°ë¸Œ ìŠ¤í‚¬ í¬ì¸íŠ¸
-	POINT_MIN_ATK,				// 29 ìµœì†Œ íŒŒê´´ë ¥
-	POINT_MAX_ATK,				// 30 ìµœëŒ€ íŒŒê´´ë ¥
-    POINT_PLAYTIME,             // 31 í”Œë ˆì´ì‹œê°„
-    POINT_HP_REGEN,             // 32 HP íšŒë³µë¥ 
-    POINT_SP_REGEN,             // 33 SP íšŒë³µë¥ 
+    POINT_ST,                   // 12 ±Ù·Â
+    POINT_HT,                   // 13 Ã¼·Â
+    POINT_DX,                   // 14 ¹ÎÃ¸¼º
+    POINT_IQ,                   // 15 Á¤½Å·Â
+    POINT_ATT_POWER,            // 16 °ø°İ·Â
+    POINT_ATT_SPEED,            // 17 °ø°İ¼Óµµ
+    POINT_EVADE_RATE,           // 18 È¸ÇÇÀ²
+    POINT_MOV_SPEED,            // 19 ÀÌµ¿¼Óµµ
+    POINT_DEF_GRADE,            // 20 ¹æ¾îµî±Ş
+	POINT_CASTING_SPEED,        // 21 ÁÖ¹®¼Óµµ (Äğ´Ù¿îÅ¸ÀÓ*100) / (100 + ÀÌ°ª) = ÃÖÁ¾ Äğ´Ù¿î Å¸ÀÓ
+	POINT_MAGIC_ATT_GRADE,      // 22 ¸¶¹ı°ø°İ·Â
+    POINT_MAGIC_DEF_GRADE,      // 23 ¸¶¹ı¹æ¾î·Â
+    POINT_EMPIRE_POINT,         // 24 Á¦±¹Á¡¼ö
+    POINT_LEVEL_STEP,           // 25 ÇÑ ·¹º§¿¡¼­ÀÇ ´Ü°è.. (1 2 3 µÉ ¶§ º¸»ó, 4 µÇ¸é ·¹º§ ¾÷)
+    POINT_STAT,                 // 26 ´É·ÂÄ¡ ¿Ã¸± ¼ö ÀÖ´Â °³¼ö
+	POINT_SUB_SKILL,            // 27 º¸Á¶ ½ºÅ³ Æ÷ÀÎÆ®
+	POINT_SKILL,                // 28 ¾×Æ¼ºê ½ºÅ³ Æ÷ÀÎÆ®
+//    POINT_SKILL_PASV,           // 27 ÆĞ½Ãºê ±â¼ú ¿Ã¸± ¼ö ÀÖ´Â °³¼ö
+//    POINT_SKILL_ACTIVE,         // 28 ¾×Æ¼ºê ½ºÅ³ Æ÷ÀÎÆ®
+	POINT_MIN_ATK,				// 29 ÃÖ¼Ò ÆÄ±«·Â
+	POINT_MAX_ATK,				// 30 ÃÖ´ë ÆÄ±«·Â
+    POINT_PLAYTIME,             // 31 ÇÃ·¹ÀÌ½Ã°£
+    POINT_HP_REGEN,             // 32 HP È¸º¹·ü
+    POINT_SP_REGEN,             // 33 SP È¸º¹·ü
     
-    POINT_BOW_DISTANCE,         // 34 í™œ ì‚¬ì •ê±°ë¦¬ ì¦ê°€ì¹˜ (meter)
+    POINT_BOW_DISTANCE,         // 34 È° »çÁ¤°Å¸® Áõ°¡Ä¡ (meter)
     
-    POINT_HP_RECOVERY,          // 35 ì²´ë ¥ íšŒë³µ ì¦ê°€ëŸ‰
-    POINT_SP_RECOVERY,          // 36 ì •ì‹ ë ¥ íšŒë³µ ì¦ê°€ëŸ‰
+    POINT_HP_RECOVERY,          // 35 Ã¼·Â È¸º¹ Áõ°¡·®
+    POINT_SP_RECOVERY,          // 36 Á¤½Å·Â È¸º¹ Áõ°¡·®
     
-    POINT_POISON_PCT,           // 37 ë… í™•ë¥ 
-    POINT_STUN_PCT,             // 38 ê¸°ì ˆ í™•ë¥ 
-    POINT_SLOW_PCT,             // 39 ìŠ¬ë¡œìš° í™•ë¥ 
-    POINT_CRITICAL_PCT,         // 40 í¬ë¦¬í‹°ì»¬ í™•ë¥ 
-    POINT_PENETRATE_PCT,        // 41 ê´€í†µíƒ€ê²© í™•ë¥ 
-    POINT_CURSE_PCT,            // 42 ì €ì£¼ í™•ë¥ 
+    POINT_POISON_PCT,           // 37 µ¶ È®·ü
+    POINT_STUN_PCT,             // 38 ±âÀı È®·ü
+    POINT_SLOW_PCT,             // 39 ½½·Î¿ì È®·ü
+    POINT_CRITICAL_PCT,         // 40 Å©¸®Æ¼ÄÃ È®·ü
+    POINT_PENETRATE_PCT,        // 41 °üÅëÅ¸°İ È®·ü
+    POINT_CURSE_PCT,            // 42 ÀúÁÖ È®·ü
     
-    POINT_ATTBONUS_HUMAN,       // 43 ì¸ê°„ì—ê²Œ ê°•í•¨
-    POINT_ATTBONUS_ANIMAL,      // 44 ë™ë¬¼ì—ê²Œ ë°ë¯¸ì§€ % ì¦ê°€
-    POINT_ATTBONUS_ORC,         // 45 ì›…ê·€ì—ê²Œ ë°ë¯¸ì§€ % ì¦ê°€
-    POINT_ATTBONUS_MILGYO,      // 46 ë°€êµì—ê²Œ ë°ë¯¸ì§€ % ì¦ê°€
-    POINT_ATTBONUS_UNDEAD,      // 47 ì‹œì²´ì—ê²Œ ë°ë¯¸ì§€ % ì¦ê°€
-    POINT_ATTBONUS_DEVIL,       // 48 ë§ˆê·€(ì•…ë§ˆ)ì—ê²Œ ë°ë¯¸ì§€ % ì¦ê°€
-    POINT_ATTBONUS_INSECT,      // 49 ë²Œë ˆì¡±
-    POINT_ATTBONUS_FIRE,        // 50 í™”ì—¼ì¡±
-    POINT_ATTBONUS_ICE,         // 51 ë¹™ì„¤ì¡±
-    POINT_ATTBONUS_DESERT,      // 52 ì‚¬ë§‰ì¡±
+    POINT_ATTBONUS_HUMAN,       // 43 ÀÎ°£¿¡°Ô °­ÇÔ
+    POINT_ATTBONUS_ANIMAL,      // 44 µ¿¹°¿¡°Ô µ¥¹ÌÁö % Áõ°¡
+    POINT_ATTBONUS_ORC,         // 45 ¿õ±Í¿¡°Ô µ¥¹ÌÁö % Áõ°¡
+    POINT_ATTBONUS_MILGYO,      // 46 ¹Ğ±³¿¡°Ô µ¥¹ÌÁö % Áõ°¡
+    POINT_ATTBONUS_UNDEAD,      // 47 ½ÃÃ¼¿¡°Ô µ¥¹ÌÁö % Áõ°¡
+    POINT_ATTBONUS_DEVIL,       // 48 ¸¶±Í(¾Ç¸¶)¿¡°Ô µ¥¹ÌÁö % Áõ°¡
+    POINT_ATTBONUS_INSECT,      // 49 ¹ú·¹Á·
+    POINT_ATTBONUS_FIRE,        // 50 È­¿°Á·
+    POINT_ATTBONUS_ICE,         // 51 ºù¼³Á·
+    POINT_ATTBONUS_DESERT,      // 52 »ç¸·Á·
     POINT_ATTBONUS_UNUSED0,     // 53 UNUSED0
     POINT_ATTBONUS_UNUSED1,     // 54 UNUSED1
     POINT_ATTBONUS_UNUSED2,     // 55 UNUSED2
@@ -1587,42 +1580,42 @@ enum EPointTypes
     POINT_ATTBONUS_UNUSED8,     // 61 UNUSED8
     POINT_ATTBONUS_UNUSED9,     // 62 UNUSED9
 
-    POINT_STEAL_HP,             // 63 ìƒëª…ë ¥ í¡ìˆ˜
-    POINT_STEAL_SP,             // 64 ì •ì‹ ë ¥ í¡ìˆ˜
+    POINT_STEAL_HP,             // 63 »ı¸í·Â Èí¼ö
+    POINT_STEAL_SP,             // 64 Á¤½Å·Â Èí¼ö
 
-    POINT_MANA_BURN_PCT,        // 65 ë§ˆë‚˜ ë²ˆ
+    POINT_MANA_BURN_PCT,        // 65 ¸¶³ª ¹ø
 
-    /// í”¼í•´ì‹œ ë³´ë„ˆìŠ¤ ///
+    /// ÇÇÇØ½Ã º¸³Ê½º ///
 
-    POINT_DAMAGE_SP_RECOVER,    // 66 ê³µê²©ë‹¹í•  ì‹œ ì •ì‹ ë ¥ íšŒë³µ í™•ë¥ 
+    POINT_DAMAGE_SP_RECOVER,    // 66 °ø°İ´çÇÒ ½Ã Á¤½Å·Â È¸º¹ È®·ü
 
-    POINT_BLOCK,                // 67 ë¸”ëŸ­ìœ¨
-    POINT_DODGE,                // 68 íšŒí”¼ìœ¨
+    POINT_BLOCK,                // 67 ºí·°À²
+    POINT_DODGE,                // 68 È¸ÇÇÀ²
 
     POINT_RESIST_SWORD,         // 69
     POINT_RESIST_TWOHAND,       // 70
     POINT_RESIST_DAGGER,        // 71
     POINT_RESIST_BELL,          // 72
     POINT_RESIST_FAN,           // 73
-    POINT_RESIST_BOW,           // 74  í™”ì‚´   ì €í•­   : ëŒ€ë¯¸ì§€ ê°ì†Œ
-    POINT_RESIST_FIRE,          // 75  í™”ì—¼   ì €í•­   : í™”ì—¼ê³µê²©ì— ëŒ€í•œ ëŒ€ë¯¸ì§€ ê°ì†Œ
-    POINT_RESIST_ELEC,          // 76  ì „ê¸°   ì €í•­   : ì „ê¸°ê³µê²©ì— ëŒ€í•œ ëŒ€ë¯¸ì§€ ê°ì†Œ
-    POINT_RESIST_MAGIC,         // 77  ìˆ ë²•   ì €í•­   : ëª¨ë“ ìˆ ë²•ì— ëŒ€í•œ ëŒ€ë¯¸ì§€ ê°ì†Œ
-    POINT_RESIST_WIND,          // 78  ë°”ëŒ   ì €í•­   : ë°”ëŒê³µê²©ì— ëŒ€í•œ ëŒ€ë¯¸ì§€ ê°ì†Œ
+    POINT_RESIST_BOW,           // 74  È­»ì   ÀúÇ×   : ´ë¹ÌÁö °¨¼Ò
+    POINT_RESIST_FIRE,          // 75  È­¿°   ÀúÇ×   : È­¿°°ø°İ¿¡ ´ëÇÑ ´ë¹ÌÁö °¨¼Ò
+    POINT_RESIST_ELEC,          // 76  Àü±â   ÀúÇ×   : Àü±â°ø°İ¿¡ ´ëÇÑ ´ë¹ÌÁö °¨¼Ò
+    POINT_RESIST_MAGIC,         // 77  ¼ú¹ı   ÀúÇ×   : ¸ğµç¼ú¹ı¿¡ ´ëÇÑ ´ë¹ÌÁö °¨¼Ò
+    POINT_RESIST_WIND,          // 78  ¹Ù¶÷   ÀúÇ×   : ¹Ù¶÷°ø°İ¿¡ ´ëÇÑ ´ë¹ÌÁö °¨¼Ò
 
-    POINT_REFLECT_MELEE,        // 79 ê³µê²© ë°˜ì‚¬
+    POINT_REFLECT_MELEE,        // 79 °ø°İ ¹İ»ç
 
-    /// íŠ¹ìˆ˜ í”¼í•´ì‹œ ///
-    POINT_REFLECT_CURSE,        // 80 ì €ì£¼ ë°˜ì‚¬
-    POINT_POISON_REDUCE,        // 81 ë…ë°ë¯¸ì§€ ê°ì†Œ
+    /// Æ¯¼ö ÇÇÇØ½Ã ///
+    POINT_REFLECT_CURSE,        // 80 ÀúÁÖ ¹İ»ç
+    POINT_POISON_REDUCE,        // 81 µ¶µ¥¹ÌÁö °¨¼Ò
 
-    /// ì  ì†Œë©¸ì‹œ ///
-    POINT_KILL_SP_RECOVER,      // 82 ì  ì†Œë©¸ì‹œ MP íšŒë³µ
+    /// Àû ¼Ò¸ê½Ã ///
+    POINT_KILL_SP_RECOVER,      // 82 Àû ¼Ò¸ê½Ã MP È¸º¹
     POINT_EXP_DOUBLE_BONUS,     // 83
     POINT_GOLD_DOUBLE_BONUS,    // 84
     POINT_ITEM_DROP_BONUS,      // 85
 
-    /// íšŒë³µ ê´€ë ¨ ///
+    /// È¸º¹ °ü·Ã ///
     POINT_POTION_BONUS,         // 86
     POINT_KILL_HP_RECOVER,      // 87
 
@@ -1647,46 +1640,46 @@ enum EPointTypes
 	POINT_STAT_RESET_COUNT = 112,
     POINT_HORSE_SKILL = 113,
 
-	POINT_MALL_ATTBONUS,		// 114 ê³µê²©ë ¥ +x%
-	POINT_MALL_DEFBONUS,		// 115 ë°©ì–´ë ¥ +x%
-	POINT_MALL_EXPBONUS,		// 116 ê²½í—˜ì¹˜ +x%
-	POINT_MALL_ITEMBONUS,		// 117 ì•„ì´í…œ ë“œë¡­ìœ¨ x/10ë°°
-	POINT_MALL_GOLDBONUS,		// 118 ëˆ ë“œë¡­ìœ¨ x/10ë°°
-    POINT_MAX_HP_PCT,			// 119 ìµœëŒ€ìƒëª…ë ¥ +x%
-    POINT_MAX_SP_PCT,			// 120 ìµœëŒ€ì •ì‹ ë ¥ +x%
+	POINT_MALL_ATTBONUS,		// 114 °ø°İ·Â +x%
+	POINT_MALL_DEFBONUS,		// 115 ¹æ¾î·Â +x%
+	POINT_MALL_EXPBONUS,		// 116 °æÇèÄ¡ +x%
+	POINT_MALL_ITEMBONUS,		// 117 ¾ÆÀÌÅÛ µå·ÓÀ² x/10¹è
+	POINT_MALL_GOLDBONUS,		// 118 µ· µå·ÓÀ² x/10¹è
+    POINT_MAX_HP_PCT,			// 119 ÃÖ´ë»ı¸í·Â +x%
+    POINT_MAX_SP_PCT,			// 120 ÃÖ´ëÁ¤½Å·Â +x%
 
-	POINT_SKILL_DAMAGE_BONUS,       // 121 ìŠ¤í‚¬ ë°ë¯¸ì§€ *(100+x)%
-	POINT_NORMAL_HIT_DAMAGE_BONUS,  // 122 í‰íƒ€ ë°ë¯¸ì§€ *(100+x)%
+	POINT_SKILL_DAMAGE_BONUS,       // 121 ½ºÅ³ µ¥¹ÌÁö *(100+x)%
+	POINT_NORMAL_HIT_DAMAGE_BONUS,  // 122 ÆòÅ¸ µ¥¹ÌÁö *(100+x)%
    
-    POINT_SKILL_DEFEND_BONUS,       // 123 ìŠ¤í‚¬ ë°©ì–´ ë°ë¯¸ì§€
-    POINT_NORMAL_HIT_DEFEND_BONUS,  // 124 í‰íƒ€ ë°©ì–´ ë°ë¯¸ì§€
+    POINT_SKILL_DEFEND_BONUS,       // 123 ½ºÅ³ ¹æ¾î µ¥¹ÌÁö
+    POINT_NORMAL_HIT_DEFEND_BONUS,  // 124 ÆòÅ¸ ¹æ¾î µ¥¹ÌÁö
     POINT_PC_BANG_EXP_BONUS,        // 125
-	POINT_PC_BANG_DROP_BONUS,       // 126 PCë°© ì „ìš© ë“œë¡­ë¥  ë³´ë„ˆìŠ¤
+	POINT_PC_BANG_DROP_BONUS,       // 126 PC¹æ Àü¿ë µå·Ó·ü º¸³Ê½º
 
-	POINT_ENERGY = 128,				// 128 ê¸°ë ¥
+	POINT_ENERGY = 128,				// 128 ±â·Â
 
-	// ê¸°ë ¥ ui ìš©.
-	// ì´ë ‡ê²Œ í•˜ê³  ì‹¶ì§€ ì•Šì•˜ì§€ë§Œ, 
-	// uiTaskBarì—ì„œëŠ” affectì— ì ‘ê·¼í•  ìˆ˜ ì—†ê³ ,
-	// ë”êµ¬ë‚˜ í´ë¼ë¦¬ì–¸íŠ¸ì—ì„œëŠ” blend_affectëŠ” ê´€ë¦¬í•˜ì§€ ì•Šì•„,
-	// ì„ì‹œë¡œ ì´ë ‡ê²Œ ë‘”ë‹¤.
-	POINT_ENERGY_END_TIME = 129,	// 129 ê¸°ë ¥ ì¢…ë£Œ ì‹œê°„
+	// ±â·Â ui ¿ë.
+	// ÀÌ·¸°Ô ÇÏ°í ½ÍÁö ¾Ê¾ÒÁö¸¸, 
+	// uiTaskBar¿¡¼­´Â affect¿¡ Á¢±ÙÇÒ ¼ö ¾ø°í,
+	// ´õ±¸³ª Å¬¶ó¸®¾ğÆ®¿¡¼­´Â blend_affect´Â °ü¸®ÇÏÁö ¾Ê¾Æ,
+	// ÀÓ½Ã·Î ÀÌ·¸°Ô µĞ´Ù.
+	POINT_ENERGY_END_TIME = 129,	// 129 ±â·Â Á¾·á ½Ã°£
 	POINT_COSTUME_ATTR_BONUS = 130,
 	POINT_MAGIC_ATT_BONUS_PER = 131,
 	POINT_MELEE_MAGIC_ATT_BONUS_PER = 132,
 
-	// ì¶”ê°€ ì†ì„± ì €í•­
-	POINT_RESIST_ICE = 133,          //   ëƒ‰ê¸° ì €í•­   : ì–¼ìŒê³µê²©ì— ëŒ€í•œ ëŒ€ë¯¸ì§€ ê°ì†Œ
-	POINT_RESIST_EARTH = 134,        //   ëŒ€ì§€ ì €í•­   : ì–¼ìŒê³µê²©ì— ëŒ€í•œ ëŒ€ë¯¸ì§€ ê°ì†Œ
-	POINT_RESIST_DARK = 135,         //   ì–´ë‘  ì €í•­   : ì–¼ìŒê³µê²©ì— ëŒ€í•œ ëŒ€ë¯¸ì§€ ê°ì†Œ
+	// Ãß°¡ ¼Ó¼º ÀúÇ×
+	POINT_RESIST_ICE = 133,          //   ³Ã±â ÀúÇ×   : ¾óÀ½°ø°İ¿¡ ´ëÇÑ ´ë¹ÌÁö °¨¼Ò
+	POINT_RESIST_EARTH = 134,        //   ´ëÁö ÀúÇ×   : ¾óÀ½°ø°İ¿¡ ´ëÇÑ ´ë¹ÌÁö °¨¼Ò
+	POINT_RESIST_DARK = 135,         //   ¾îµÒ ÀúÇ×   : ¾óÀ½°ø°İ¿¡ ´ëÇÑ ´ë¹ÌÁö °¨¼Ò
 
-	POINT_RESIST_CRITICAL = 136,		// í¬ë¦¬í‹°ì»¬ ì €í•­	: ìƒëŒ€ì˜ í¬ë¦¬í‹°ì»¬ í™•ë¥ ì„ ê°ì†Œ
-	POINT_RESIST_PENETRATE = 137,		// ê´€í†µíƒ€ê²© ì €í•­	: ìƒëŒ€ì˜ ê´€í†µíƒ€ê²© í™•ë¥ ì„ ê°ì†Œ
+	POINT_RESIST_CRITICAL = 136,		// Å©¸®Æ¼ÄÃ ÀúÇ×	: »ó´ëÀÇ Å©¸®Æ¼ÄÃ È®·üÀ» °¨¼Ò
+	POINT_RESIST_PENETRATE = 137,		// °üÅëÅ¸°İ ÀúÇ×	: »ó´ëÀÇ °üÅëÅ¸°İ È®·üÀ» °¨¼Ò
 #ifdef ADVANCED_BLOCK_DODGE
 	POINT_MAGIC = 138,
 #endif
 
-	// í´ë¼ì´ì–¸íŠ¸ í¬ì¸íŠ¸
+	// Å¬¶óÀÌ¾ğÆ® Æ÷ÀÎÆ®
 	POINT_MIN_WEP = 200,
 	POINT_MAX_WEP,
 	POINT_MIN_MAGIC_WEP,
@@ -1694,7 +1687,7 @@ enum EPointTypes
 	POINT_HIT_RATE,
 
 
-    //POINT_MAX_NUM = 255,=>stdafx.h ë¡œ/
+    //POINT_MAX_NUM = 255,=>stdafx.h ·Î/
 };
 
 typedef struct packet_points
@@ -1710,8 +1703,8 @@ typedef struct packet_point_change
 	DWORD		dwVID;
 	BYTE		Type;
 
-	long        amount; // ë°”ë€ ê°’
-    long        value;  // í˜„ì¬ ê°’
+	long        amount; // ¹Ù²ï °ª
+    long        value;  // ÇöÀç °ª
 } TPacketGCPointChange;
 
 typedef struct packet_motion
@@ -1749,7 +1742,7 @@ typedef struct packet_set_item
 	BYTE		pos;
 	DWORD		vnum;
 	BYTE		count;
-	DWORD		flags;	// í”Œë˜ê·¸ ì¶”ê°€
+	DWORD		flags;	// ÇÃ·¡±× Ãß°¡
 	long		alSockets[ITEM_SOCKET_SLOT_MAX_NUM];
     TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_SLOT_MAX_NUM];
 } TPacketGCItemSet;
@@ -1776,8 +1769,8 @@ typedef struct packet_set_item2
 	TItemPos	Cell;
 	DWORD		vnum;
 	WORD		count;
-	DWORD		flags;	// í”Œë˜ê·¸ ì¶”ê°€
-	DWORD		anti_flags;	// í”Œë˜ê·¸ ì¶”ê°€
+	DWORD		flags;	// ÇÃ·¡±× Ãß°¡
+	DWORD		anti_flags;	// ÇÃ·¡±× Ãß°¡
 	bool		highlight;
 	long		alSockets[ITEM_SOCKET_SLOT_MAX_NUM];
     TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_SLOT_MAX_NUM];
@@ -1858,7 +1851,7 @@ typedef struct packet_shop_start
 	struct packet_shop_item		items[SHOP_HOST_ITEM_MAX_NUM];
 } TPacketGCShopStart;
 
-typedef struct packet_shop_start_ex // ë‹¤ìŒì— TSubPacketShopTab* shop_tabs ì´ ë”°ë¼ì˜´.
+typedef struct packet_shop_start_ex // ´ÙÀ½¿¡ TSubPacketShopTab* shop_tabs ÀÌ µû¶ó¿È.
 {
 	typedef struct sub_packet_shop_tab 
 	{
@@ -2001,12 +1994,12 @@ typedef struct packet_move
 enum
 {
 	QUEST_SEND_IS_BEGIN         = 1 << 0,
-    QUEST_SEND_TITLE            = 1 << 1,  // 28ì ê¹Œì§€
-    QUEST_SEND_CLOCK_NAME       = 1 << 2,  // 16ì ê¹Œì§€
+    QUEST_SEND_TITLE            = 1 << 1,  // 28ÀÚ ±îÁö
+    QUEST_SEND_CLOCK_NAME       = 1 << 2,  // 16ÀÚ ±îÁö
     QUEST_SEND_CLOCK_VALUE      = 1 << 3,
-    QUEST_SEND_COUNTER_NAME     = 1 << 4,  // 16ì ê¹Œì§€
+    QUEST_SEND_COUNTER_NAME     = 1 << 4,  // 16ÀÚ ±îÁö
     QUEST_SEND_COUNTER_VALUE    = 1 << 5,
-	QUEST_SEND_ICON_FILE		= 1 << 6,  // 24ì ê¹Œì§€ 
+	QUEST_SEND_ICON_FILE		= 1 << 6,  // 24ÀÚ ±îÁö 
 };
 
 typedef struct packet_quest_info
@@ -2029,8 +2022,8 @@ typedef struct packet_attack
 {
     BYTE        header;
     DWORD       dwVID;
-    DWORD       dwVictimVID;    // ì  VID
-    BYTE        bType;          // ê³µê²© ìœ í˜•
+    DWORD       dwVictimVID;    // Àû VID
+    BYTE        bType;          // °ø°İ À¯Çü
 } TPacketGCAttack;
 
 typedef struct packet_c2c
@@ -2100,7 +2093,7 @@ enum EPVPModes
 typedef struct packet_duel_start
 {
     BYTE	header ;
-    WORD	wSize ;	// DWORDê°€ ëª‡ê°œ? ê°œìˆ˜ = (wSize - sizeof(TPacketGCPVPList)) / 4
+    WORD	wSize ;	// DWORD°¡ ¸î°³? °³¼ö = (wSize - sizeof(TPacketGCPVPList)) / 4
 } TPacketGCDuelStart ;
 
 typedef struct packet_pvp
@@ -2265,7 +2258,7 @@ enum
 
 typedef struct packet_guild_sub_grade
 {
-	char grade_name[GUILD_GRADE_NAME_MAX_LEN+1]; // 8+1 ê¸¸ë“œì¥, ê¸¸ë“œì› ë“±ì˜ ì´ë¦„
+	char grade_name[GUILD_GRADE_NAME_MAX_LEN+1]; // 8+1 ±æµåÀå, ±æµå¿ø µîÀÇ ÀÌ¸§
 	BYTE auth_flag;
 } TPacketGCGuildSubGrade;
 
@@ -2306,7 +2299,7 @@ enum EGuildWarState
     GUILD_WAR_ON_WAR,
     GUILD_WAR_END,
 
-    GUILD_WAR_DURATION = 2*60*60, // 2ì‹œê°„
+    GUILD_WAR_DURATION = 2*60*60, // 2½Ã°£
 };
 
 typedef struct packet_guild_war
@@ -2382,8 +2375,8 @@ typedef struct SRefineTable
     DWORD src_vnum;
     DWORD result_vnum;
     BYTE material_count;
-    int cost; // ì†Œìš” ë¹„ìš©
-    int prob; // í™•ë¥ 
+    int cost; // ¼Ò¿ä ºñ¿ë
+    int prob; // È®·ü
     TMaterial materials[REFINE_MATERIAL_MAX_NUM];
 } TRefineTable;
 
@@ -2418,17 +2411,17 @@ enum SPECIAL_EFFECT
 	SE_SUCCESS,
 	SE_FAIL,
 	SE_FR_SUCCESS,    
-    SE_LEVELUP_ON_14_FOR_GERMANY,	//ë ˆë²¨ì—… 14ì¼ë•Œ ( ë…ì¼ì „ìš© )
-    SE_LEVELUP_UNDER_15_FOR_GERMANY,//ë ˆë²¨ì—… 15ì¼ë•Œ ( ë…ì¼ì „ìš© )
+    SE_LEVELUP_ON_14_FOR_GERMANY,	//·¹º§¾÷ 14ÀÏ¶§ ( µ¶ÀÏÀü¿ë )
+    SE_LEVELUP_UNDER_15_FOR_GERMANY,//·¹º§¾÷ 15ÀÏ¶§ ( µ¶ÀÏÀü¿ë )
     SE_PERCENT_DAMAGE1,
     SE_PERCENT_DAMAGE2,
     SE_PERCENT_DAMAGE3,    
 	SE_AUTO_HPUP,
 	SE_AUTO_SPUP,
-	SE_EQUIP_RAMADAN_RING,			// ì´ˆìŠ¹ë‹¬ì˜ ë°˜ì§€ë¥¼ ì°©ìš©í•˜ëŠ” ìˆœê°„ì— ë°œë™í•˜ëŠ” ì´í™íŠ¸
-	SE_EQUIP_HALLOWEEN_CANDY,		// í• ë¡œìœˆ ì‚¬íƒ•ì„ ì°©ìš©(-_-;)í•œ ìˆœê°„ì— ë°œë™í•˜ëŠ” ì´í™íŠ¸
-	SE_EQUIP_HAPPINESS_RING,		// í¬ë¦¬ìŠ¤ë§ˆìŠ¤ í–‰ë³µì˜ ë°˜ì§€ë¥¼ ì°©ìš©í•˜ëŠ” ìˆœê°„ì— ë°œë™í•˜ëŠ” ì´í™íŠ¸
-	SE_EQUIP_LOVE_PENDANT,		// ë°œë Œíƒ€ì¸ ì‚¬ë‘ì˜ íŒ¬ë˜íŠ¸(71145) ì°©ìš©í•  ë•Œ ì´í™íŠ¸ (ë°œë™ì´í™íŠ¸ì„, ì§€ì†ì´í™íŠ¸ ì•„ë‹˜)
+	SE_EQUIP_RAMADAN_RING,			// ÃÊ½Â´ŞÀÇ ¹İÁö¸¦ Âø¿ëÇÏ´Â ¼ø°£¿¡ ¹ßµ¿ÇÏ´Â ÀÌÆåÆ®
+	SE_EQUIP_HALLOWEEN_CANDY,		// ÇÒ·ÎÀ© »çÅÁÀ» Âø¿ë(-_-;)ÇÑ ¼ø°£¿¡ ¹ßµ¿ÇÏ´Â ÀÌÆåÆ®
+	SE_EQUIP_HAPPINESS_RING,		// Å©¸®½º¸¶½º Çàº¹ÀÇ ¹İÁö¸¦ Âø¿ëÇÏ´Â ¼ø°£¿¡ ¹ßµ¿ÇÏ´Â ÀÌÆåÆ®
+	SE_EQUIP_LOVE_PENDANT,		// ¹ß·»Å¸ÀÎ »ç¶ûÀÇ ÆÒ´øÆ®(71145) Âø¿ëÇÒ ¶§ ÀÌÆåÆ® (¹ßµ¿ÀÌÆåÆ®ÀÓ, Áö¼ÓÀÌÆåÆ® ¾Æ´Ô)
 };
 
 typedef struct SPacketGCSpecialEffect
@@ -2731,7 +2724,7 @@ typedef struct packet_hs_check_req
 	AHNHS_TRANS_BUFFER	Req;
 } TPacketHSCheck;
 
-//NOTE : recv/sendì— ê³µí†µìœ¼ë¡œ ìƒê¹€, bPacketDataì˜ ë‚´ìš©ë§Œ ë°”ë€ë‹¤.
+//NOTE : recv/send¿¡ °øÅëÀ¸·Î »ı±è, bPacketDataÀÇ ³»¿ë¸¸ ¹Ù²ï´Ù.
 typedef struct packet_xtrap_verify
 {
 	BYTE	bHeader;
@@ -2766,7 +2759,7 @@ struct TPacketKeyAgreementCompleted
 #endif // _IMPROVED_PACKET_ENCRYPTION_
 
 #ifdef __AUCTION__
-// Argumentì˜ ìš©ë„ëŠ” cmdì— ë”°ë¼ ë‹¤ë¥´ë‹¤.
+// ArgumentÀÇ ¿ëµµ´Â cmd¿¡ µû¶ó ´Ù¸£´Ù.
 typedef struct SPacketCGAuctionCmd
 {
 	BYTE bHeader;
@@ -2792,7 +2785,7 @@ typedef struct SPacketGCSpecificEffect
 	char effect_file[128];
 } TPacketGCSpecificEffect;
 
-// ìš©í˜¼ì„
+// ¿ëÈ¥¼®
 enum EDragonSoulRefineWindowRefineType
 {
 	DragonSoulRefineWindow_UPGRADE,
@@ -2839,36 +2832,5 @@ typedef struct SChannelStatus
 	short nPort;
 	BYTE bStatus;
 } TChannelStatus;
-
-#ifdef ENABLE_FISHING_TIMER
-enum EFishingTimerTypes
-{
-	FISHING_TIMER_SUBHEADER_GC_RESET,
-	FISHING_TIMER_SUBHEADER_GC_WAITING,
-	FISHING_TIMER_SUBHEADER_GC_GET,
-};
-
-typedef struct SPacketGCFishingTimer
-{
-	BYTE header;
-	BYTE subHeader;
-	BYTE timer;
-} TPacketGCFishingTimer;
-#endif
-#ifdef ENABLE_MINING_TIMER
-enum EMiningTimerTypes
-{
-	MINING_TIMER_SUBHEADER_GC_RESET,
-	MINING_TIMER_SUBHEADER_GC_WAITING,
-	MINING_TIMER_SUBHEADER_GC_GET,
-};
-
-typedef struct SPacketGCMiningTimer
-{
-	BYTE header;
-	BYTE subHeader;
-	BYTE timer;
-} TPacketGCMiningTimer;
-#endif
 
 #pragma pack(pop)
