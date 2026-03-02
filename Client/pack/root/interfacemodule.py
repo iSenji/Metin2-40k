@@ -44,10 +44,6 @@ import uiScriptLocale
 
 import event
 import localeInfo
-if app.ENABLE_FISHING_TIMER:
-	import uiFishingTimer
-if app.ENABLE_MINING_TIMER:
-	import uiMiningTimer
 
 IsQBHide = 0
 class Interface(object):
@@ -78,10 +74,6 @@ class Interface(object):
 		self.wndMiniMap = None
 		self.wndGuild = None
 		self.wndGuildBuilding = None
-		if app.ENABLE_FISHING_TIMER:
-			self.wndFishingTimer = None
-		if app.ENABLE_MINING_TIMER:
-			self.wndMiningTimer = None
 
 		self.listGMName = {}
 		self.wndQuestWindow = {}
@@ -202,10 +194,6 @@ class Interface(object):
 		self.wndMiniMap = wndMiniMap
 		self.wndSafebox = wndSafebox
 		self.wndChatLog = wndChatLog
-		if app.ENABLE_FISHING_TIMER:
-			self.wndFishingTimer = uiFishingTimer.FishingTimerWindow()
-		if app.ENABLE_MINING_TIMER:
-			self.wndMiningTimer = uiMiningTimer.MiningTimerWindow()
 		
 		if app.ENABLE_DRAGON_SOUL_SYSTEM:
 			self.wndDragonSoul.SetDragonSoulRefineWindow(self.wndDragonSoulRefine)
@@ -370,15 +358,6 @@ class Interface(object):
 				eachQuestWindow = None
 		self.wndQuestWindow = {}
 
-		if app.ENABLE_FISHING_TIMER:
-			if self.wndFishingTimer:
-				self.wndFishingTimer.Destroy()
-
-		if app.ENABLE_MINING_TIMER:
-			if self.wndMiningTimer:
-				self.wndMiningTimer.Destroy()
-
-
 		if self.wndChat:
 			self.wndChat.Destroy()
 
@@ -490,10 +469,6 @@ class Interface(object):
 		del self.mallPageDlg
 		# END_OF_ITEM_MALL
 
-		if app.ENABLE_FISHING_TIMER:
-			del self.wndFishingTimer
-		if app.ENABLE_MINING_TIMER:
-			del self.wndMiningTimer
 		del self.wndGuild
 		del self.wndMessenger
 		del self.wndUICurtain
@@ -589,7 +564,7 @@ class Interface(object):
 		if app.ENABLE_DRAGON_SOUL_SYSTEM:
 			self.wndDragonSoul.RefreshItemSlot()
 
-	def RefreshCharacter(self): ## Character í˜ì´ì§€ì˜ ì–¼êµ´, Inventory í˜ì´ì§€ì˜ ì „ì‹  ê·¸ë¦¼ ë“±ì˜ Refresh
+	def RefreshCharacter(self): ## Character ÆäÀÌÁöÀÇ ¾ó±¼, Inventory ÆäÀÌÁöÀÇ Àü½Å ±×¸² µîÀÇ Refresh
 		self.wndCharacter.RefreshCharacter()
 		self.wndTaskBar.RefreshQuickSlot()
 
@@ -727,7 +702,7 @@ class Interface(object):
 	def RemovePartyMember(self, pid):
 		self.wndParty.RemovePartyMember(pid)
 
-		##!! 20061026.levites.í€˜ìŠ¤íŠ¸_ìœ„ì¹˜_ë³´ì •
+		##!! 20061026.levites.Äù½ºÆ®_À§Ä¡_º¸Á¤
 		self.__ArrangeQuestButton()
 
 	def LinkPartyMember(self, pid, vid):
@@ -742,7 +717,7 @@ class Interface(object):
 	def ExitParty(self):
 		self.wndParty.ExitParty()
 
-		##!! 20061026.levites.í€˜ìŠ¤íŠ¸_ìœ„ì¹˜_ë³´ì •
+		##!! 20061026.levites.Äù½ºÆ®_À§Ä¡_º¸Á¤
 		self.__ArrangeQuestButton()
 
 	def PartyHealReady(self):
@@ -891,15 +866,6 @@ class Interface(object):
 		if self.wndGuild:
 			self.wndGuild.Hide()
 			
-		if app.ENABLE_FISHING_TIMER:
-			if self.wndFishingTimer:
-				self.wndFishingTimer.Hide()
-
-		if app.ENABLE_MINING_TIMER:
-			if self.wndMiningTimer:
-				self.wndMiningTimer.Hide()
-
-
 		if self.wndExpandedTaskBar:
 			self.wndExpandedTaskBar.Hide()
  
@@ -914,7 +880,7 @@ class Interface(object):
 		if True == self.wndChat.IsEditMode():
 			self.wndChat.CloseChat()
 		else:
-			# ì›¹í˜ì´ì§€ê°€ ì—´ë ¸ì„ë•ŒëŠ” ì±„íŒ… ì…ë ¥ì´ ì•ˆë¨
+			# À¥ÆäÀÌÁö°¡ ¿­·ÈÀ»¶§´Â Ã¤ÆÃ ÀÔ·ÂÀÌ ¾ÈµÊ
 			if self.wndWeb and self.wndWeb.IsShow():
 				pass
 			else:
@@ -1015,7 +981,7 @@ class Interface(object):
 			else:
 				self.wndExpandedTaskBar.Close()
 	
-	# ìš©í˜¼ì„
+	# ¿ëÈ¥¼®
 	def DragonSoulActivate(self, deck):
 		if app.ENABLE_DRAGON_SOUL_SYSTEM:
 			self.wndDragonSoul.ActivateDragonSoulByExtern(deck)
@@ -1086,7 +1052,7 @@ class Interface(object):
 				if True == self.wndDragonSoulRefine.IsShow():
 					self.wndDragonSoulRefine.Close()
 
-	# ìš©í˜¼ì„ ë
+	# ¿ëÈ¥¼® ³¡
 	
 	def ToggleGuildWindow(self):
 		if not self.wndGuild.IsShow():
@@ -1143,7 +1109,7 @@ class Interface(object):
 	def OpenWebWindow(self, url):
 		self.wndWeb.Open(url)
 
-		# ì›¹í˜ì´ì§€ë¥¼ ì—´ë©´ ì±„íŒ…ì„ ë‹«ëŠ”ë‹¤
+		# À¥ÆäÀÌÁö¸¦ ¿­¸é Ã¤ÆÃÀ» ´İ´Â´Ù
 		self.wndChat.CloseChat()
 
 	# show GIFT
@@ -1171,9 +1137,9 @@ class Interface(object):
 	def SucceedCubeWork(self, itemVnum, count):
 		self.wndCube.Clear()
 		
-		print "íë¸Œ ì œì‘ ì„±ê³µ! [%d:%d]" % (itemVnum, count)
+		print "Å¥ºê Á¦ÀÛ ¼º°ø! [%d:%d]" % (itemVnum, count)
 
-		if 0: # ê²°ê³¼ ë©”ì‹œì§€ ì¶œë ¥ì€ ìƒëµ í•œë‹¤
+		if 0: # °á°ú ¸Ş½ÃÁö Ãâ·ÂÀº »ı·« ÇÑ´Ù
 			self.wndCubeResult.SetPosition(*self.wndCube.GetGlobalPosition())
 			self.wndCubeResult.SetCubeResultItem(itemVnum, count)
 			self.wndCubeResult.Open()
@@ -1337,7 +1303,7 @@ class Interface(object):
 		btn = uiWhisper.WhisperButton()
 
 		# QUEST_LETTER_IMAGE
-		##!! 20061026.levites.í€˜ìŠ¤íŠ¸_ì´ë¯¸ì§€_êµì²´
+		##!! 20061026.levites.Äù½ºÆ®_ÀÌ¹ÌÁö_±³Ã¼
 		import item
 		if "item"==iconType:
 			item.SelectItem(int(iconName))
@@ -1384,7 +1350,7 @@ class Interface(object):
 		screenWidth = wndMgr.GetScreenWidth()
 		screenHeight = wndMgr.GetScreenHeight()
 
-		##!! 20061026.levites.í€˜ìŠ¤íŠ¸_ìœ„ì¹˜_ë³´ì •
+		##!! 20061026.levites.Äù½ºÆ®_À§Ä¡_º¸Á¤
 		if self.wndParty.IsShow():
 			xPos = 100 + 30
 		else:
@@ -1438,8 +1404,8 @@ class Interface(object):
 	def __InitWhisper(self):
 		chat.InitWhisper(self)
 
-	## ì±„íŒ…ì°½ì˜ "ë©”ì‹œì§€ ë³´ë‚´ê¸°"ë¥¼ ëˆŒë €ì„ë•Œ ì´ë¦„ ì—†ëŠ” ëŒ€í™”ì°½ì„ ì—¬ëŠ” í•¨ìˆ˜
-	## ì´ë¦„ì´ ì—†ê¸° ë•Œë¬¸ì— ê¸°ì¡´ì˜ WhisperDialogDict ì™€ ë³„ë„ë¡œ ê´€ë¦¬ëœë‹¤.
+	## Ã¤ÆÃÃ¢ÀÇ "¸Ş½ÃÁö º¸³»±â"¸¦ ´­·¶À»¶§ ÀÌ¸§ ¾ø´Â ´ëÈ­Ã¢À» ¿©´Â ÇÔ¼ö
+	## ÀÌ¸§ÀÌ ¾ø±â ¶§¹®¿¡ ±âÁ¸ÀÇ WhisperDialogDict ¿Í º°µµ·Î °ü¸®µÈ´Ù.
 	def OpenWhisperDialogWithoutTarget(self):
 		if not self.dlgWhisperWithoutTarget:
 			dlgWhisper = uiWhisper.WhisperDialog(self.MinimizeWhisperDialog, self.CloseWhisperDialog)
@@ -1456,7 +1422,7 @@ class Interface(object):
 			self.dlgWhisperWithoutTarget.SetTop()
 			self.dlgWhisperWithoutTarget.OpenWithoutTarget(self.RegisterTemporaryWhisperDialog)
 
-	## ì´ë¦„ ì—†ëŠ” ëŒ€í™”ì°½ì—ì„œ ì´ë¦„ì„ ê²°ì •í–ˆì„ë•Œ WhisperDialogDictì— ì°½ì„ ë„£ì–´ì£¼ëŠ” í•¨ìˆ˜
+	## ÀÌ¸§ ¾ø´Â ´ëÈ­Ã¢¿¡¼­ ÀÌ¸§À» °áÁ¤ÇßÀ»¶§ WhisperDialogDict¿¡ Ã¢À» ³Ö¾îÁÖ´Â ÇÔ¼ö
 	def RegisterTemporaryWhisperDialog(self, name):
 		if not self.dlgWhisperWithoutTarget:
 			return
@@ -1475,7 +1441,7 @@ class Interface(object):
 		self.dlgWhisperWithoutTarget = None
 		self.__CheckGameMaster(name)
 
-	## ìºë¦­í„° ë©”ë‰´ì˜ 1:1 ëŒ€í™” í•˜ê¸°ë¥¼ ëˆŒë €ì„ë•Œ ì´ë¦„ì„ ê°€ì§€ê³  ë°”ë¡œ ì°½ì„ ì—¬ëŠ” í•¨ìˆ˜
+	## Ä³¸¯ÅÍ ¸Ş´ºÀÇ 1:1 ´ëÈ­ ÇÏ±â¸¦ ´­·¶À»¶§ ÀÌ¸§À» °¡Áö°í ¹Ù·Î Ã¢À» ¿©´Â ÇÔ¼ö
 	def OpenWhisperDialog(self, name):
 		if not self.whisperDialogDict.has_key(name):
 			dlg = self.__MakeWhisperDialog(name)
@@ -1488,7 +1454,7 @@ class Interface(object):
 			if 0 != btn:
 				self.__DestroyWhisperButton(btn)
 
-	## ë‹¤ë¥¸ ìºë¦­í„°ë¡œë¶€í„° ë©”ì„¸ì§€ë¥¼ ë°›ì•˜ì„ë•Œ ì¼ë‹¨ ë²„íŠ¼ë§Œ ë„ì›Œ ë‘ëŠ” í•¨ìˆ˜
+	## ´Ù¸¥ Ä³¸¯ÅÍ·ÎºÎÅÍ ¸Ş¼¼Áö¸¦ ¹Ş¾ÒÀ»¶§ ÀÏ´Ü ¹öÆ°¸¸ ¶ç¿ö µÎ´Â ÇÔ¼ö
 	def RecvWhisper(self, name):
 		if not self.whisperDialogDict.has_key(name):
 			btn = self.__FindWhisperButton(name)
@@ -1507,7 +1473,7 @@ class Interface(object):
 	def MakeWhisperButton(self, name):
 		self.__MakeWhisperButton(name)
 
-	## ë²„íŠ¼ì„ ëˆŒë €ì„ë•Œ ì°½ì„ ì—¬ëŠ” í•¨ìˆ˜
+	## ¹öÆ°À» ´­·¶À»¶§ Ã¢À» ¿©´Â ÇÔ¼ö
 	def ShowWhisperDialog(self, btn):
 		try:
 			self.__MakeWhisperDialog(btn.name)
@@ -1519,11 +1485,11 @@ class Interface(object):
 			import dbg
 			dbg.TraceError("interface.ShowWhisperDialog - Failed to find key")
 
-		## ë²„íŠ¼ ì´ˆê¸°í™”
+		## ¹öÆ° ÃÊ±âÈ­
 		self.__DestroyWhisperButton(btn)
 
-	## WhisperDialog ì°½ì—ì„œ ìµœì†Œí™” ëª…ë ¹ì„ ìˆ˜í–‰í–ˆì„ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
-	## ì°½ì„ ìµœì†Œí™” í•©ë‹ˆë‹¤.
+	## WhisperDialog Ã¢¿¡¼­ ÃÖ¼ÒÈ­ ¸í·ÉÀ» ¼öÇàÇßÀ»¶§ È£ÃâµÇ´Â ÇÔ¼ö
+	## Ã¢À» ÃÖ¼ÒÈ­ ÇÕ´Ï´Ù.
 	def MinimizeWhisperDialog(self, name):
 
 		if 0 != name:
@@ -1531,8 +1497,8 @@ class Interface(object):
 
 		self.CloseWhisperDialog(name)
 
-	## WhisperDialog ì°½ì—ì„œ ë‹«ê¸° ëª…ë ¹ì„ ìˆ˜í–‰í–ˆì„ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
-	## ì°½ì„ ì§€ì›ë‹ˆë‹¤.
+	## WhisperDialog Ã¢¿¡¼­ ´İ±â ¸í·ÉÀ» ¼öÇàÇßÀ»¶§ È£ÃâµÇ´Â ÇÔ¼ö
+	## Ã¢À» Áö¿ó´Ï´Ù.
 	def CloseWhisperDialog(self, name):
 
 		if 0 == name:
@@ -1551,7 +1517,7 @@ class Interface(object):
 			import dbg
 			dbg.TraceError("interface.CloseWhisperDialog - Failed to find key")
 
-	## ë²„íŠ¼ì˜ ê°œìˆ˜ê°€ ë°”ë€Œì—ˆì„ë•Œ ë²„íŠ¼ì„ ì¬ì •ë ¬ í•˜ëŠ” í•¨ìˆ˜
+	## ¹öÆ°ÀÇ °³¼ö°¡ ¹Ù²î¾úÀ»¶§ ¹öÆ°À» ÀçÁ¤·Ä ÇÏ´Â ÇÔ¼ö
 	def __ArrangeWhisperButton(self):
 
 		screenWidth = wndMgr.GetScreenWidth()
@@ -1568,9 +1534,9 @@ class Interface(object):
 			button.SetPosition(xPos + (int(count/yCount) * -50), yPos + (count%yCount * 63))
 			count += 1
 
-	## ì´ë¦„ìœ¼ë¡œ Whisper ë²„íŠ¼ì„ ì°¾ì•„ ë¦¬í„´í•´ ì£¼ëŠ” í•¨ìˆ˜
-	## ë²„íŠ¼ì€ ë”•ì…”ë„ˆë¦¬ë¡œ í•˜ì§€ ì•ŠëŠ” ê²ƒì€ ì •ë ¬ ë˜ì–´ ë²„ë ¤ ìˆœì„œê°€ ìœ ì§€ ë˜ì§€ ì•Šìœ¼ë©°
-	## ì´ë¡œ ì¸í•´ ToolTipë“¤ì´ ë‹¤ë¥¸ ë²„íŠ¼ë“¤ì— ì˜í•´ ê°€ë ¤ì§€ê¸° ë•Œë¬¸ì´ë‹¤.
+	## ÀÌ¸§À¸·Î Whisper ¹öÆ°À» Ã£¾Æ ¸®ÅÏÇØ ÁÖ´Â ÇÔ¼ö
+	## ¹öÆ°Àº µñ¼Å³Ê¸®·Î ÇÏÁö ¾Ê´Â °ÍÀº Á¤·Ä µÇ¾î ¹ö·Á ¼ø¼­°¡ À¯Áö µÇÁö ¾ÊÀ¸¸ç
+	## ÀÌ·Î ÀÎÇØ ToolTipµéÀÌ ´Ù¸¥ ¹öÆ°µé¿¡ ÀÇÇØ °¡·ÁÁö±â ¶§¹®ÀÌ´Ù.
 	def __FindWhisperButton(self, name):
 		for button in self.whisperButtonList:
 			if button.name == name:
@@ -1578,7 +1544,7 @@ class Interface(object):
 
 		return 0
 
-	## ì°½ì„ ë§Œë“­ë‹ˆë‹¤.
+	## Ã¢À» ¸¸µì´Ï´Ù.
 	def __MakeWhisperDialog(self, name):
 		dlgWhisper = uiWhisper.WhisperDialog(self.MinimizeWhisperDialog, self.CloseWhisperDialog)
 		dlgWhisper.BindInterface(self)
@@ -1590,7 +1556,7 @@ class Interface(object):
 
 		return dlgWhisper
 
-	## ë²„íŠ¼ì„ ë§Œë“­ë‹ˆë‹¤.
+	## ¹öÆ°À» ¸¸µì´Ï´Ù.
 	def __MakeWhisperButton(self, name):
 		whisperButton = uiWhisper.WhisperButton()
 		whisperButton.SetUpVisual("d:/ymir work/ui/game/windows/btn_mail_up.sub")
@@ -1719,16 +1685,6 @@ class Interface(object):
 
 	def EmptyFunction(self):
 		pass
-
-	if app.ENABLE_FISHING_TIMER:
-		def GetFishingTimer(self, timeType, time):
-			if self.wndFishingTimer:
-				self.wndFishingTimer.GetFishingTimer(timeType, time)
-
-	if app.ENABLE_MINING_TIMER:
-		def GetMiningTimer(self, timeType, time):
-			if self.wndMiningTimer:
-				self.wndMiningTimer.GetMiningTimer(timeType, time)
 
 if __name__ == "__main__":
 

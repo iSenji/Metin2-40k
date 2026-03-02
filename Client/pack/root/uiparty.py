@@ -7,13 +7,25 @@ import localeInfo
 import uiScriptLocale
 import constInfo
 import mouseModule
+import app
 import playerSettingModule
+
+FACE_IMAGE_DICT = {
+	playerSettingModule.RACE_WARRIOR_M	: "icon/face/warrior_m.tga",
+	playerSettingModule.RACE_WARRIOR_W	: "icon/face/warrior_w.tga",
+	playerSettingModule.RACE_ASSASSIN_M	: "icon/face/assassin_m.tga",
+	playerSettingModule.RACE_ASSASSIN_W	: "icon/face/assassin_w.tga",
+	playerSettingModule.RACE_SURA_M		: "icon/face/sura_m.tga",
+	playerSettingModule.RACE_SURA_W		: "icon/face/sura_w.tga",
+	playerSettingModule.RACE_SHAMAN_M	: "icon/face/shaman_m.tga",
+	playerSettingModule.RACE_SHAMAN_W	: "icon/face/shaman_w.tga",
+}
 
 class PartyMemberInfoBoard(ui.ScriptWindow):
 	if localeInfo.IsJAPAN():
 		BOARD_WIDTH = 130
 	else:
-		BOARD_WIDTH = 106
+		BOARD_WIDTH = 156
 	BOARD_COLOR = grp.GenerateColor(0.0, 0.0, 0.0, 0.5)
 	GAUGE_OUT_LINE_COLOR = grp.GenerateColor(1.0, 1.0, 1.0, 0.3)
 
@@ -66,17 +78,6 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 							player.PARTY_STATE_BUFFER : localeInfo.PARTY_SET_BUFFER,
 							player.PARTY_STATE_SKILL_MASTER : localeInfo.PARTY_SET_SKILL_MASTER, }
 
-	FACE_IMAGE_DICT = {
-	playerSettingModule.RACE_WARRIOR_M	: "icon/face/warrior_m.tga",
-	playerSettingModule.RACE_WARRIOR_W	: "icon/face/warrior_w.tga",
-	playerSettingModule.RACE_ASSASSIN_M	: "icon/face/assassin_m.tga",
-	playerSettingModule.RACE_ASSASSIN_W	: "icon/face/assassin_w.tga",
-	playerSettingModule.RACE_SURA_M		: "icon/face/sura_m.tga",
-	playerSettingModule.RACE_SURA_W		: "icon/face/sura_w.tga",
-	playerSettingModule.RACE_SHAMAN_M	: "icon/face/shaman_m.tga",
-	playerSettingModule.RACE_SHAMAN_W	: "icon/face/shaman_w.tga",
-}
-
 	def __init__(self):
 		ui.ScriptWindow.__init__(self)
 
@@ -116,6 +117,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 				self.faceImage = self.GetChild("Face_Image")
 				self.faceSlot=self.GetChild("Face_Slot")
 				self.gaugeEXP = self.GetChild("GaugeEXP")
+
 			self.gauge = self.GetChild("Gauge")
 			self.stateButton = self.GetChild("StateButton")
 			self.partyAffectImageList.append(self.GetChild("ExperienceImage"))
@@ -143,6 +145,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 			self.faceImage = None
 			self.faceSlot = None
 			self.gaugeEXP = None
+
 		self.gauge = None
 		self.stateButton = None
 		self.partyAffectImageList = []
@@ -211,7 +214,8 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 		self.isShowStateButton = True
 
 		(x, y) = self.GetGlobalPosition()
-		xPos = x + 110
+		xPos = x + 159
+		y = y+6
 
 		skillLevel = self.__GetPartySkillLevel()
 
@@ -284,10 +288,10 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 	if app.ENABLE_PARTY_UPDATE:
 		def SetCharacterRace(self, race, pid):
 			if pid == self.pid:
-					faceImageName = FACE_IMAGE_DICT[race]
-					self.faceImage.LoadImage(faceImageName)
+				faceImageName = FACE_IMAGE_DICT[race]
+				self.faceImage.LoadImage(faceImageName)
 
-			def SetCharacterLevel(self, level, pid):
+		def SetCharacterLevel(self, level, pid):
 			if pid == self.pid:
 				if len(self.GetCharacterName()) > 0:
 					self.levelTextLine.SetText("Lv.{} {}".format(level, self.GetCharacterName()))
@@ -295,7 +299,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 				else:
 					self.levelTextLine.SetText("Lv.{}".format(level))
 					self.nameTextLine.Show()
-	
+
 	def SetCharacterVID(self, vid):
 		self.vid = vid
 
@@ -309,7 +313,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 		hpPercentage = max(0, hpPercentage)
 		self.gauge.SetPercentage(hpPercentage, 100)
 
-	if app.ENABLE_PARTY_UPDATE
+	if app.ENABLE_PARTY_UPDATE:
 		def SetCharacterEXP(self, EXPPercentage):
 			EXPPercentage = max(0, EXPPercentage)
 			self.gaugeEXP.SetPercentage(EXPPercentage, 100)
@@ -348,6 +352,7 @@ class PartyMemberInfoBoard(ui.ScriptWindow):
 			self.levelTextLine.SetPackedFontColor(self.LINK_COLOR)
 			self.faceImage.Show()
 			self.gaugeEXP.Show()
+
 		self.gauge.Show()
 
 	def Unlink(self):
@@ -645,7 +650,7 @@ class PartyWindow(ui.Window):
 
 	def __CreatePartyMenu(self):
 		partyMenu = PartyMenu()
-		partyMenu.SetSize(106, 70 + 70)
+		partyMenu.SetSize(156, 70 + 70)
 		partyMenu.Hide()
 		self.partyMenu = partyMenu
 
@@ -727,6 +732,7 @@ class PartyWindow(ui.Window):
 		state = player.GetPartyMemberState(pid)
 		hpPercentage = player.GetPartyMemberHPPercentage(pid)
 		affectsList = player.GetPartyMemberAffects(pid)
+		
 		if app.ENABLE_PARTY_UPDATE:
 			level = player.GetPartyMemberLevel(pid)
 			board.SetCharacterLevel(level, pid)

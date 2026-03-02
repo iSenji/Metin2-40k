@@ -116,7 +116,7 @@ class GameWindow(ui.ScriptWindow):
 		self.mapNameShower = uiMapNameShower.MapNameShower()
 		self.affectShower = uiAffectShower.AffectShower()
 		
-		#wj 2014.1.2. ESCí‚¤ë¥¼ ëˆ„ë¥¼ ì‹œ ìš°ì„ ì ìœ¼ë¡œ DropQuestionDialogë¥¼ ë„ë„ë¡ ë§Œë“¤ì—ˆë‹¤. í•˜ì§€ë§Œ ì²˜ìŒì— itemDropQuestionDialogê°€ ì„ ì–¸ë˜ì–´ ìˆì§€ ì•Šì•„ ERRORê°€ ë°œìƒí•˜ì—¬ initì—ì„œ ì„ ì–¸ê³¼ ë™ì‹œì— ì´ˆê¸°í™” ì‹œí‚´.
+		#wj 2014.1.2. ESCÅ°¸¦ ´©¸¦ ½Ã ¿ì¼±ÀûÀ¸·Î DropQuestionDialog¸¦ ²ôµµ·Ï ¸¸µé¾ú´Ù. ÇÏÁö¸¸ Ã³À½¿¡ itemDropQuestionDialog°¡ ¼±¾ğµÇ¾î ÀÖÁö ¾Ê¾Æ ERROR°¡ ¹ß»ıÇÏ¿© init¿¡¼­ ¼±¾ğ°ú µ¿½Ã¿¡ ÃÊ±âÈ­ ½ÃÅ´.
 		self.itemDropQuestionDialog = None
 
 		self.__SetQuickSlotMode()
@@ -233,7 +233,7 @@ class GameWindow(ui.ScriptWindow):
 			exception.Abort("GameWindow.Open")
 		# END_OF_START_GAME_ERROR_EXIT
 		
-		# NPCê°€ íë¸Œì‹œìŠ¤í…œìœ¼ë¡œ ë§Œë“¤ ìˆ˜ ìˆëŠ” ì•„ì´í…œë“¤ì˜ ëª©ë¡ì„ ìºì‹±
+		# NPC°¡ Å¥ºê½Ã½ºÅÛÀ¸·Î ¸¸µé ¼ö ÀÖ´Â ¾ÆÀÌÅÛµéÀÇ ¸ñ·ÏÀ» Ä³½Ì
 		# ex) cubeInformation[20383] = [ {"rewordVNUM": 72723, "rewordCount": 1, "materialInfo": "101,1&102,2", "price": 999 }, ... ]
 		self.cubeInformation = {}
 		self.currentCubeNPC = 0
@@ -324,10 +324,10 @@ class GameWindow(ui.ScriptWindow):
 	def __BuildKeyDict(self):
 		onPressKeyDict = {}
 
-		##PressKey ëŠ” ëˆ„ë¥´ê³  ìˆëŠ” ë™ì•ˆ ê³„ì† ì ìš©ë˜ëŠ” í‚¤ì´ë‹¤.
+		##PressKey ´Â ´©¸£°í ÀÖ´Â µ¿¾È °è¼Ó Àû¿ëµÇ´Â Å°ÀÌ´Ù.
 		
-		## ìˆ«ì ë‹¨ì¶•í‚¤ í€µìŠ¬ë¡¯ì— ì´ìš©ëœë‹¤.(ì´í›„ ìˆ«ìë“¤ë„ í€µ ìŠ¬ë¡¯ìš© ì˜ˆì•½)
-		## F12 ëŠ” í´ë¼ ë””ë²„ê·¸ìš© í‚¤ì´ë¯€ë¡œ ì“°ì§€ ì•ŠëŠ” ê²Œ ì¢‹ë‹¤.
+		## ¼ıÀÚ ´ÜÃàÅ° Äü½½·Ô¿¡ ÀÌ¿ëµÈ´Ù.(ÀÌÈÄ ¼ıÀÚµéµµ Äü ½½·Ô¿ë ¿¹¾à)
+		## F12 ´Â Å¬¶ó µğ¹ö±×¿ë Å°ÀÌ¹Ç·Î ¾²Áö ¾Ê´Â °Ô ÁÁ´Ù.
 		onPressKeyDict[app.DIK_1]	= lambda : self.__PressNumKey(1)
 		onPressKeyDict[app.DIK_2]	= lambda : self.__PressNumKey(2)
 		onPressKeyDict[app.DIK_3]	= lambda : self.__PressNumKey(3)
@@ -347,7 +347,7 @@ class GameWindow(ui.ScriptWindow):
 		onPressKeyDict[app.DIK_SYSRQ]		= lambda : self.SaveScreen()
 		onPressKeyDict[app.DIK_SPACE]		= lambda : self.StartAttack()
 
-		#ìºë¦­í„° ì´ë™í‚¤
+		#Ä³¸¯ÅÍ ÀÌµ¿Å°
 		onPressKeyDict[app.DIK_UP]			= lambda : self.MoveUp()
 		onPressKeyDict[app.DIK_DOWN]		= lambda : self.MoveDown()
 		onPressKeyDict[app.DIK_LEFT]		= lambda : self.MoveLeft()
@@ -621,12 +621,12 @@ class GameWindow(ui.ScriptWindow):
 		self.TextureNum.SetFontName(localeInfo.UI_DEF_FONT)
 		self.TextureNum.SetPosition(wndMgr.GetScreenWidth() - 270, 100)
 
-		# ì˜¤ë¸Œì íŠ¸ ê·¸ë¦¬ëŠ” ê°œìˆ˜
+		# ¿ÀºêÁ§Æ® ±×¸®´Â °³¼ö
 		self.ObjectNum = ui.TextLine()
 		self.ObjectNum.SetFontName(localeInfo.UI_DEF_FONT)
 		self.ObjectNum.SetPosition(wndMgr.GetScreenWidth() - 270, 120)
 
-		# ì‹œì•¼ê±°ë¦¬
+		# ½Ã¾ß°Å¸®
 		self.ViewDistance = ui.TextLine()
 		self.ViewDistance.SetFontName(localeInfo.UI_DEF_FONT)
 		self.ViewDistance.SetPosition(0, 0)
@@ -950,17 +950,6 @@ class GameWindow(ui.ScriptWindow):
 	def OnSafeBoxError(self):
 		self.PopupMessage(localeInfo.SAFEBOX_ERROR)
 
-	if app.ENABLE_FISHING_TIMER:
-		def BINARY_GetFishingTimer(self, timeType, time):
-			if self.interface:
-				self.interface.GetFishingTimer(timeType, time)
-
-	if app.ENABLE_MINING_TIMER:
-		def BINARY_GetMiningTimer(self, timeType, time):
-			if self.interface:
-				self.interface.GetMiningTimer(timeType, time)
-
-
 	def OnFishingSuccess(self, isFish, fishName):
 		chat.AppendChatWithDelay(chat.CHAT_TYPE_INFO, localeInfo.FISHING_SUCCESS(isFish, fishName), 2000)
 
@@ -1278,7 +1267,7 @@ class GameWindow(ui.ScriptWindow):
 		try:
 			if app.ENABLE_KEYCHANGE_SYSTEM:
 				if self.wndKeyChange.IsOpen() == 1:
-					## AÂ°Â¼Â³AÂ¤ Aï¿ AI Â¿Â­Â·EAâ‰«Â¶Â§. Â±Ã—Â¸ï¿½Â°i Â¹Â¹Â¸| Â¹UÂ²UAo Â¼Â±AACÃŸAâ‰«Â¶Â§
+					## A¡Æ¨ù©øA¢´ A¡ËAI ¢¯¡©¡¤EA¡í¢Ò¡×. ¡¾¡¿¢¬¢ç¡Æi ©ö©ö¢¬| ©öU©÷UAo ¨ù¡¾AAC©¬A¡í¢Ò¡×
 					if self.wndKeyChange.IsSelectKeySlot():
 						if app.IsPressed(app.DIK_LCONTROL) or app.IsPressed(app.DIK_RCONTROL):
 							if self.wndKeyChange.IsChangeKey(self.wndKeyChange.GetSelectSlotNumber()):
@@ -1406,7 +1395,7 @@ class GameWindow(ui.ScriptWindow):
 			self.__DropMoney(attachedType, attachedMoney)
 
 	def __DropMoney(self, attachedType, attachedMoney):
-		# PRIVATESHOP_DISABLE_ITEM_DROP - ê°œì¸ìƒì  ì—´ê³  ìˆëŠ” ë™ì•ˆ ì•„ì´í…œ ë²„ë¦¼ ë°©ì§€
+		# PRIVATESHOP_DISABLE_ITEM_DROP - °³ÀÎ»óÁ¡ ¿­°í ÀÖ´Â µ¿¾È ¾ÆÀÌÅÛ ¹ö¸² ¹æÁö
 		if uiPrivateShopBuilder.IsBuildingPrivateShop():			
 			chat.AppendChat(chat.CHAT_TYPE_INFO, localeInfo.DROP_ITEM_FAILURE_PRIVATE_SHOP)
 			return
@@ -1428,7 +1417,7 @@ class GameWindow(ui.ScriptWindow):
 		self.itemDropQuestionDialog = itemDropQuestionDialog
 
 	def __DropItem(self, attachedType, attachedItemIndex, attachedItemSlotPos, attachedItemCount):
-		# PRIVATESHOP_DISABLE_ITEM_DROP - ê°œì¸ìƒì  ì—´ê³  ìˆëŠ” ë™ì•ˆ ì•„ì´í…œ ë²„ë¦¼ ë°©ì§€
+		# PRIVATESHOP_DISABLE_ITEM_DROP - °³ÀÎ»óÁ¡ ¿­°í ÀÖ´Â µ¿¾È ¾ÆÀÌÅÛ ¹ö¸² ¹æÁö
 		if uiPrivateShopBuilder.IsBuildingPrivateShop():			
 			chat.AppendChat(chat.CHAT_TYPE_INFO, localeInfo.DROP_ITEM_FAILURE_PRIVATE_SHOP)
 			return
@@ -1560,7 +1549,7 @@ class GameWindow(ui.ScriptWindow):
 		
 	def UpdateDebugInfo(self):
 		#
-		# ìºë¦­í„° ì¢Œí‘œ ë° FPS ì¶œë ¥
+		# Ä³¸¯ÅÍ ÁÂÇ¥ ¹× FPS Ãâ·Â
 		(x, y, z) = player.GetMainCharacterPosition()
 		nUpdateTime = app.GetUpdateTime()
 		nUpdateFPS = app.GetUpdateFPS()
@@ -1723,22 +1712,22 @@ class GameWindow(ui.ScriptWindow):
 	def BINARY_Cube_Close(self):
 		self.interface.CloseCubeWindow()
 
-	# ì œì‘ì— í•„ìš”í•œ ê³¨ë“œ, ì˜ˆìƒë˜ëŠ” ì™„ì„±í’ˆì˜ VNUMê³¼ ê°œìˆ˜ ì •ë³´ update
+	# Á¦ÀÛ¿¡ ÇÊ¿äÇÑ °ñµå, ¿¹»óµÇ´Â ¿Ï¼ºÇ°ÀÇ VNUM°ú °³¼ö Á¤º¸ update
 	def BINARY_Cube_UpdateInfo(self, gold, itemVnum, count):
 		self.interface.UpdateCubeInfo(gold, itemVnum, count)
 		
 	def BINARY_Cube_Succeed(self, itemVnum, count):
-		print "íë¸Œ ì œì‘ ì„±ê³µ"
+		print "Å¥ºê Á¦ÀÛ ¼º°ø"
 		self.interface.SucceedCubeWork(itemVnum, count)
 		pass
 
 	def BINARY_Cube_Failed(self):
-		print "íë¸Œ ì œì‘ ì‹¤íŒ¨"
+		print "Å¥ºê Á¦ÀÛ ½ÇÆĞ"
 		self.interface.FailedCubeWork()
 		pass
 
 	def BINARY_Cube_ResultList(self, npcVNUM, listText):
-		# ResultList Text Format : 72723,1/72725,1/72730.1/50001,5  ì´ëŸ°ì‹ìœ¼ë¡œ "/" ë¬¸ìë¡œ êµ¬ë¶„ëœ ë¦¬ìŠ¤íŠ¸ë¥¼ ì¤Œ
+		# ResultList Text Format : 72723,1/72725,1/72730.1/50001,5  ÀÌ·±½ÄÀ¸·Î "/" ¹®ÀÚ·Î ±¸ºĞµÈ ¸®½ºÆ®¸¦ ÁÜ
 		#print listText
 		
 		if npcVNUM == 0:
@@ -1839,7 +1828,7 @@ class GameWindow(ui.ScriptWindow):
 	
 	# END_OF_CUBE
 	
-	# ìš©í˜¼ì„	
+	# ¿ëÈ¥¼®	
 	def BINARY_Highlight_Item(self, inven_type, inven_pos):
 		self.interface.Highligt_Item(inven_type, inven_pos)
 	

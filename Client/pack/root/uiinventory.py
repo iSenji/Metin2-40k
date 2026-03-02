@@ -1129,7 +1129,7 @@ class InventoryWindow(ui.ScriptWindow):
 		if item.ITEM_TYPE_WEAPON != item.GetItemType():
 			return False
 
-		for i in xrange(player.METIN_SOCKET_MAX_NUM):
+		for i in xrange(player.METINSTONE_SOCKET_MAX_NUM):
 			if player.GetItemMetinSocket(dstSlotPos, i) == constInfo.ERROR_METIN_STONE:
 				return True
 
