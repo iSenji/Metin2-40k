@@ -9,6 +9,8 @@ import chr
 import nonplayer
 import localeInfo
 import constInfo
+if app.ENABLE_TARGET_AFFECT:
+	import uiAffectShower
 
 class TargetBoard(ui.ThinBoard):
 
@@ -116,6 +118,10 @@ class TargetBoard(ui.ThinBoard):
 		self.buttonDict[localeInfo.TARGET_BUTTON_EMOTION_ALLOW].SAFE_SetEvent(self.__OnEmotionAllow)
 		
 		self.buttonDict["VOTE_BLOCK_CHAT"].SetEvent(ui.__mem_func__(self.__OnVoteBlockChat))
+		if app.ENABLE_TARGET_AFFECT:
+			self.affectShower = uiAffectShower.AffectShower()
+			self.affectShower.ignoreCheck = True
+			self.SetAffectPosition()
 
 		self.name = name
 		self.hpGauge = hpGauge
@@ -147,7 +153,38 @@ class TargetBoard(ui.ThinBoard):
 		self.buttonDict = None
 		self.name = None
 		self.hpGauge = None
+		if app.ENABLE_TARGET_AFFECT:
+			self.affectShower = None
 		self.__Initialize()
+
+	if app.ENABLE_TARGET_AFFECT:
+		def AddAffect(self, type, duration):
+			if not self.affectShower:
+				return
+			self.affectShower.BINARY_NEW_AddAffect(int(type), 0, 0, int(duration))
+
+		def RemoveAffect(self, type):
+			if not self.affectShower:
+				return
+			self.affectShower.BINARY_NEW_RemoveAffect(int(type), 0)
+
+		def ClearAffects(self):
+			if self.affectShower:
+				self.affectShower.ClearAllAffects()
+
+		def SetAffectPosition(self):
+			if not self.affectShower:
+				return
+
+			x, y = self.GetGlobalPosition()
+			self.affectShower.SetPosition(x+5, y + self.GetHeight() + 10)
+
+		def SetPosition(self, x, y):
+			ui.ThinBoard.SetPosition(self, x, y)
+			try:
+				self.SetAffectPosition()
+			except:
+				pass
 
 	def OnPressedCloseButton(self):
 		player.ClearTarget()
@@ -156,6 +193,8 @@ class TargetBoard(ui.ThinBoard):
 	def Close(self):
 		self.__Initialize()
 		self.Hide()
+		if app.ENABLE_TARGET_AFFECT:
+			self.ClearAffects()
 
 	def Open(self, vid, name):
 		if vid:
@@ -226,6 +265,8 @@ class TargetBoard(ui.ThinBoard):
 		self.SetPosition(wndMgr.GetScreenWidth()/2 - self.GetWidth()/2, 10)
 
 	def ResetTargetBoard(self):
+		if app.ENABLE_TARGET_AFFECT:
+			self.ClearAffects()
 
 		for btn in self.buttonDict.values():
 			btn.Hide()
