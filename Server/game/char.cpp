@@ -5397,7 +5397,7 @@ void CHARACTER::BroadcastTargetAffectPacket()
 		{
 			CAffect * pkAff = *cit++;
 
-			ch->ChatPacket(CHAT_TYPE_INFO, "%4d %5d %5d %8d %u", 
+			ChatPacket(CHAT_TYPE_INFO, "%4d %5d %5d %8d %u", 
 				pkAff->dwType, pkAff->bApplyOn, pkAff->lApplyValue, pkAff->lDuration, pkAff->dwFlag);
 		}
 	}
